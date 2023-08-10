@@ -1,0 +1,22 @@
+(deflisten workspaces 'scripts/hyprland_workspace_indicator/bin/workspaces_script')
+
+(defwidget workspaceicon [monitor workspace]
+  (revealer :reveal "${workspaces[monitor].workspaces[workspace]}" :transition "slideright" :duration "500ms"
+    (overlay :visible "${workspaces[monitor].workspaces[workspace]}"
+      (box :class "inactive-circle-indicator" :width 30 :spacing 0
+        (label :text "${workspace}"))
+      (revealer :reveal "${workspaces[monitor].activeworkspaces[workspace]}"
+                :transition "crossfade"
+        (box :class "$active-circle-colour" :width 30 :spacing 0
+          (label :text "${workspace}"))))))
+
+(defwidget workspaceindicator [monitor]
+  (box :halign "start"
+       :width 20
+       :space-evenly "false"
+       :spacing 0
+       :orientation "h"
+    (for workspace in "[1,2,3,4,5,6,7,8,9,0]"
+      (workspaceicon :monitor monitor
+                     :workspace workspace))))
+

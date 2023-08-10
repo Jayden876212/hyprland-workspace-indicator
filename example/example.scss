@@ -1,0 +1,22 @@
+@mixin border {
+	border-color: #13161b;
+	border-style: solid;
+	border-width: 2px;
+}
+
+$border-radius-circle: 50%;
+$inactive-circle-colour: #2e3440;
+$active-circle-colour: #81a1c1;
+
+.inactive-circle-indicator {
+	@include border;
+	border-radius: $border-radius-circle;
+	background-color: rgba($inactive-circle-colour, 0.75);
+}
+
+.active-circle-indicator {
+	@include border;
+	border-radius: $border-radius-circle;
+	background-color: rgba($active-circle-colour, 1);
+}
+
