@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -O3 -march=znver3 -mtune=znver3 -g
+CFLAGS = -Wall -Wextra -O3 -march=native -mtune=native -g
 
 # Directories
 SRC_DIR = src
