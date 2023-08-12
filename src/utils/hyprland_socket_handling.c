@@ -80,7 +80,6 @@ cJSON * grab_json_from_socket_data(const char * cmd, SocketData * socket_data) {
 
     socket_data->data_received[num_bytes_received] = '\0';
 
-    close(socket_data->poll_descriptor->fd);
 
     // Duplicate the response into a new buffer
 
@@ -94,9 +93,13 @@ cJSON * grab_json_from_socket_data(const char * cmd, SocketData * socket_data) {
         return NULL;
     }
 
+    close(socket_data->poll_descriptor->fd);
+
     free(socket_data->data_received);
     socket_data->data_received = NULL;
+
     free(socket_data->poll_descriptor);
     socket_data->poll_descriptor = NULL;
+
     return bufferjson;
 }

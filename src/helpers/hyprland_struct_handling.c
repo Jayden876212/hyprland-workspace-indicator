@@ -3,9 +3,15 @@
 #include <stdint.h>
 #include <string.h>
 
+#include <unistd.h>
 #include <poll.h>
+#include <errno.h>
 
 #include <cjson/cJSON.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 
 // include/data
 #include "data/constants.h"
@@ -23,11 +29,11 @@ HyprlandData * initialise_hyprland_data_structure() {
     HyprlandData * hyprland_data = (HyprlandData*)malloc(sizeof(HyprlandData));
 
 
-    SocketData * hyprctl_data_monitors = create_socket_data();
+    SocketData * hyprctl_data_monitors = initialise_socket_data_structure();
     hyprland_data->monitors = grab_json_from_socket_data("-j/monitors", hyprctl_data_monitors);
-    SocketData * hyprctl_data_workspaces = create_socket_data();
+    SocketData * hyprctl_data_workspaces = initialise_socket_data_structure();
     hyprland_data->workspaces = grab_json_from_socket_data("-j/workspaces", hyprctl_data_workspaces);
-    SocketData * hyprctl_data_activeworkspace = create_socket_data();
+    SocketData * hyprctl_data_activeworkspace = initialise_socket_data_structure();
     hyprland_data->activeworkspace = grab_json_from_socket_data("-j/activeworkspace", hyprctl_data_activeworkspace);
 
     hyprland_data->monitors_length = cJSON_GetArraySize(hyprland_data->monitors);
@@ -56,7 +62,7 @@ int delete_hyprland_data_structure(HyprlandData * hyprland_data) {
     return 0;
 }
 
-SocketData * create_socket_data() {
+SocketData * initialise_socket_data_structure() {
     SocketData * socket_data = (SocketData*)malloc(sizeof(SocketData));
 
     socket_data->data_received = (char*)malloc(MAX_BUFFER_SIZE + 1);
@@ -65,4 +71,31 @@ SocketData * create_socket_data() {
     socket_data->poll_descriptor->events = POLLIN;
 
     return socket_data;
+}
+
+void cleanup_socket_data_structure(SocketData * socket_data) {
+    free(socket_data->data_received);
+    socket_data->data_received = NULL;
+
+    free(socket_data->poll_descriptor);
+    socket_data->poll_descriptor = NULL;
+}
+
+int delete_socket_data_structure(SocketData * socket_data) {
+    if (socket_data == NULL) {
+        fprintf(stderr, "Error accessing SocketData structure: SocketData does not point to valid memory (NULL).\n");
+        cleanup_socket_data_structure(socket_data);
+        return -1;
+    }
+
+    int close_result = close(socket_data->poll_descriptor->fd);
+    if (close_result == -1) {
+        fprintf(stderr, "Error closing socket: %s\n", strerror(errno));
+        cleanup_socket_data_structure(socket_data);
+        return -1;
+    }
+
+    cleanup_socket_data_structure(socket_data);
+
+    return 0;
 }
