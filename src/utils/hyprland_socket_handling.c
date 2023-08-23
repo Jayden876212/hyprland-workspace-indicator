@@ -17,14 +17,20 @@
 // include/helpers
 #include "helpers/hyprland_struct_handling.h"
 
-char * get_hyprland_socket(Socket socket_type) {
+char * get_hyprland_socket(Socket socket_type) { 
+    // Grab the hyprland_instance_signature for use in the socket path
     const char * hyprland_instance_signature = getenv("HYPRLAND_INSTANCE_SIGNATURE");
     if (hyprland_instance_signature == NULL) {
         fprintf(stderr, "Error: hyprland instance signature not found. Make sure hyprland is running.\n");
         return NULL;
     }
 
+
+    // Add the rest of the path to the hyprland_instance_signature 
     int his_buffer_size = strlen(hyprland_instance_signature) + HIS_PATH_BUFFER_SIZE;
+
+    // Configure the socket path depending on the socket given
+    // SOCKET is for simply "socket", which only handles requests; SOCKET2 is for "socket2", which handles events
     char * socket_name_string;
     if (socket_type == SOCKET) {
         socket_name_string = "socket";
@@ -36,6 +42,7 @@ char * get_hyprland_socket(Socket socket_type) {
         return NULL;
     }
 
+    // Concatenate the hyprland_instance_signature, socket_name and the rest of the path to get the full path to the socket
     char socket_path[his_buffer_size];
     int chars_written = snprintf(socket_path, his_buffer_size, "/tmp/hypr/%s/.%s.sock", hyprland_instance_signature, socket_name_string);
     if (chars_written == -1) {
@@ -43,6 +50,7 @@ char * get_hyprland_socket(Socket socket_type) {
         return NULL;
     }
 
+    // Dynamically allocate a duplicate of the string for use outside of the function
     char * socket_path_duplicate = strdup(socket_path);
     if (socket_path_duplicate == NULL) {
         perror("strdup");
@@ -50,7 +58,7 @@ char * get_hyprland_socket(Socket socket_type) {
         return NULL;
     }
 
-    return socket_path_duplicate;
+    return socket_path_duplicate; // It is the function user's job to free() the string
 }
 
 int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socket_data) {
