@@ -61,7 +61,7 @@ char * get_hyprland_socket(Socket socket_type) {
     return socket_path_duplicate; // It is the function user's job to free() the string
 }
 
-int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socket_data) {
+int set_up_hyprland_socket(Socket socket_type, SocketData * socket_data) {
     // Grab the path of the hyprland socket to communicate with it
     char * socket_path = get_hyprland_socket(socket_type);
     if (socket_path == NULL) {
@@ -94,8 +94,8 @@ int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socke
 }
 
 cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_data) {
-    int connection_result = grab_information_from_hyprland_socket(SOCKET, socket_data);
-    if (connection_result == -1) {
+    // 
+    if (set_up_hyprland_socket(SOCKET, socket_data) == -1) {
         fprintf(stderr, "Error: Failed to grab information from hyprland socket\n");
         return NULL;
     }

@@ -26,7 +26,7 @@
 
 int main() {
     SocketData * events_data = initialise_socket_data_structure();
-    grab_information_from_hyprland_socket(SOCKET2, events_data);
+    set_up_hyprland_socket(SOCKET2, events_data);
     
     int ret;
 
