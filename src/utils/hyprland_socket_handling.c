@@ -70,15 +70,17 @@ int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socke
         return -1;
     }
 
+    // Set file descriptor to the unix socket (to communicate with it) and initialise unix socket
     socket_data->poll_descriptor->fd = socket(AF_UNIX, SOCK_STREAM, 0);
     int socket_file_descriptor = socket_data->poll_descriptor->fd;
-
     if (socket_file_descriptor == -1) {
         perror("socket");
         free(socket_path);
         return -1;
     }
 
+    // Set up socket address family and duplicate allocated path to address path
+    // (this is necessary for it to be used to receive data from hyprland)
     struct sockaddr_un address;
     address.sun_family = AF_UNIX;
     strncpy(address.sun_path, socket_path, sizeof(address.sun_path) - 1);
