@@ -19,6 +19,11 @@
 
 char * get_hyprland_socket(Socket socket_type) {
     const char * hyprland_instance_signature = getenv("HYPRLAND_INSTANCE_SIGNATURE");
+    if (hyprland_instance_signature == NULL) {
+        fprintf(stderr, "Error: hyprland instance signature not found. Make sure hyprland is running.\n");
+        return NULL;
+    }
+
     int his_buffer_size = strlen(hyprland_instance_signature) + HIS_PATH_BUFFER_SIZE;
     char * socket_name_string;
     if (socket_type == SOCKET) {
@@ -30,9 +35,22 @@ char * get_hyprland_socket(Socket socket_type) {
         fprintf(stderr, "Error: invalid socket\n");
         return NULL;
     }
+
     char socket_path[his_buffer_size];
-    snprintf(socket_path, his_buffer_size, "/tmp/hypr/%s/.%s.sock", hyprland_instance_signature, socket_name_string);
-    return strdup(socket_path);
+    int chars_written = snprintf(socket_path, his_buffer_size, "/tmp/hypr/%s/.%s.sock", hyprland_instance_signature, socket_name_string);
+    if (chars_written == -1) {
+        perror("malloc");
+        return NULL;
+    }
+
+    char * socket_path_duplicate = strdup(socket_path);
+    if (socket_path_duplicate == NULL) {
+        perror("strdup");
+        free(socket_path_duplicate);
+        return NULL;
+    }
+
+    return socket_path_duplicate;
 }
 
 int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socket_data) {
