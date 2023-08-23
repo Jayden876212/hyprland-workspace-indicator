@@ -8,7 +8,6 @@
 #define WORKSPACES_AMOUNT 10
 
 #define BITWISE_FALSE 0
-#define LEFTMOST_SINGULAR_BIT 0b1000000000000000
 
 typedef enum {
     SOCKET,
