@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-// include/data
-#include "data/constants.h"
-
 int print_binary(uint16_t integer) { // This is a test function for debugging only.
     printf("16-bit binary representation of %u: ", integer);
 
