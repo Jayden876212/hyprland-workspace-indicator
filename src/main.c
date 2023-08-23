@@ -31,27 +31,23 @@ int main() {
     int ret;
 
     while (1) {
-        // Call poll() to check for events on the socket
-        ret = poll(events_data->poll_descriptor, 1, -1); // -1 means wait indefinitely
+        ret = poll(events_data->poll_descriptor, 1, -1); 
         if (ret == -1) {
             perror("poll");
             close(events_data->poll_descriptor->fd);
             exit(EXIT_FAILURE);
         }
         if (events_data->poll_descriptor->revents & POLLIN) {
-            // Data is ready to read from the socket
             ssize_t bytes_received = recv(events_data->poll_descriptor->fd, events_data->data_received, MAX_BUFFER_SIZE + 1, 0);
             if (bytes_received == -1) {
                 perror("recv");
                 close(events_data->poll_descriptor->fd);
                 exit(EXIT_FAILURE);
             } else if (bytes_received == 0) {
-                // Connection closed by the other end
                 printf("Connection closed by the server.\n");
                 break;
             }
 
-            // Process the received data
             events_data->data_received[bytes_received] = '\0';
             char * search_string_workspace = "workspace>>";
             char * search_string_focusedmon = "focusedmon>>";

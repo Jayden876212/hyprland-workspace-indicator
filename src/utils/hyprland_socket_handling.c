@@ -1,5 +1,3 @@
-// where get_hyprland_socket(), grab_json_from_socket() and anything else relating to sockets will be declared
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -41,7 +39,6 @@ int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socke
     char * socket_path = get_hyprland_socket(socket_type);
     struct sockaddr_un address;
 
-    // Create socket 
     socket_data->poll_descriptor->fd = socket(AF_UNIX, SOCK_STREAM, 0);
 
     if ((socket_data->poll_descriptor->fd) == -1) {
@@ -54,7 +51,6 @@ int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socke
     strncpy(address.sun_path, socket_path, sizeof(address.sun_path) - 1);
     free(socket_path);
 
-    // Connect to the server's socket
     if (connect(socket_data->poll_descriptor->fd, (struct sockaddr*)&address, sizeof(address)) == -1) {
         perror("connect");
         return -1;
@@ -66,7 +62,6 @@ int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socke
 cJSON * grab_json_from_socket_data(const char * cmd, SocketData * socket_data) {
     grab_information_from_hyprland_socket(SOCKET, socket_data);
 
-    // Send data to the server
     const char * message = cmd;
     send(socket_data->poll_descriptor->fd, message, strlen(message), 0);
 
@@ -81,7 +76,6 @@ cJSON * grab_json_from_socket_data(const char * cmd, SocketData * socket_data) {
     socket_data->data_received[num_bytes_received] = '\0';
 
 
-    // Duplicate the response into a new buffer
 
     cJSON * bufferjson = cJSON_Parse(socket_data->data_received);
     if (bufferjson == NULL) {

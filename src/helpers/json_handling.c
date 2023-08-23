@@ -1,5 +1,3 @@
-// create_workspace_array(), create_activeworkspace_array(), create_json_array() and other json handling functions will be declared here
-
 #include <stdio.h>
 #include <stdlib.h>
 

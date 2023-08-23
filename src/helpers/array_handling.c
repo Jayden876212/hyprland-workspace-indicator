@@ -45,7 +45,7 @@ int create_workspace_array(HyprlandData * hyprland_data) {
 }
 
 int create_activeworkspace_array(HyprlandData * hyprland_data) {
-    cJSON * active_monitor_obj = cJSON_GetObjectItem(hyprland_data->activeworkspace, "monitor"); // returns something like "DP-3"
+    cJSON * active_monitor_obj = cJSON_GetObjectItem(hyprland_data->activeworkspace, "monitor");
     char * active_monitor = active_monitor_obj->valuestring;
 
     cJSON * workspace_id_obj = cJSON_GetObjectItem(hyprland_data->activeworkspace, "id");

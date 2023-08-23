@@ -17,9 +17,6 @@ typedef struct {
     int monitors_length;
     int workspaces_length;
 
-    //bool (*workspace_array)[WORKSPACES_AMOUNT];
-    //bool (*activeworkspace_array)[WORKSPACES_AMOUNT];
-    
     uint16_t * workspace_array;
     uint16_t * activeworkspace_array;
 } HyprlandData;
