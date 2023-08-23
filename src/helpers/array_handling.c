@@ -36,7 +36,7 @@ int create_workspace_array(HyprlandData * hyprland_data) {
 
             if (strcmp(active_monitor, monitor_name) == 0) {
                 int target_workspace_id = (workspace_id != 10) ? workspace_id : 0;
-                hyprland_data->workspace_array[i] = toggle_bit_array(hyprland_data->workspace_array[i], target_workspace_id);
+                hyprland_data->workspace_array[i] = turn_on_bit_in_array(hyprland_data->workspace_array[i], target_workspace_id);
             }
         }
     }
@@ -60,7 +60,7 @@ int create_activeworkspace_array(HyprlandData * hyprland_data) {
 
         if (strcmp(active_monitor, monitor_name) == 0) {
             int target_workspace_id = (workspace_id != 10) ? workspace_id : 0;
-            hyprland_data->activeworkspace_array[i] = toggle_bit_array(hyprland_data->activeworkspace_array[i], target_workspace_id);
+            hyprland_data->activeworkspace_array[i] = turn_on_bit_in_array(hyprland_data->activeworkspace_array[i], target_workspace_id);
         }
     }
 

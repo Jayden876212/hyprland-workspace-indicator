@@ -19,7 +19,7 @@ int print_binary(uint16_t integer) { // This is a test function for debugging on
     return 0;
 }
 
-uint16_t toggle_bit_array(uint16_t bit_array, int position) {
+uint16_t turn_on_bit_in_array(uint16_t bit_array, int position) {
     // Shift the bit based on the position given by the function user.
     uint16_t bit = 0b1000000000000000 >> position;
 
