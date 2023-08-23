@@ -94,17 +94,21 @@ int set_up_hyprland_socket(Socket socket_type, SocketData * socket_data) {
 }
 
 cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_data) {
-    // 
+    // Set up the hyprland socket so we can receive the information to be parsed from hyprland
     if (set_up_hyprland_socket(SOCKET, socket_data) == -1) {
         fprintf(stderr, "Error: Failed to grab information from hyprland socket\n");
         return NULL;
     }
 
+    // Ask for data from the socket using the command given so we can choose what info we need
     int socket_file_descriptor = socket_data->poll_descriptor->fd;
     char * data_received = socket_data->data_received;
-    
-    send(socket_file_descriptor, command, strlen(command), 0);
+    if (send(socket_file_descriptor, command, strlen(command), 0) == -1) {
+        perror("send");
+        free(data_received);
+    }
 
+    // Receive data into a buffer so it can be read as string to be parsed by cJSON
     ssize_t num_bytes_received = recv(socket_file_descriptor, data_received, MAX_BUFFER_SIZE, 0);
     if (num_bytes_received == -1) {
         perror("recv");
@@ -112,8 +116,10 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
         return NULL;
     }
 
+    // Null-terminate the string buffer so it is a valid string to be parsed by cJSON
     data_received[num_bytes_received] = '\0';
 
+    // Parse the data using cJSON as json so we can easily access different information
     cJSON * bufferjson = cJSON_Parse(data_received);
     if (bufferjson == NULL) {
         const char * error_ptr = cJSON_GetErrorPtr();
@@ -124,6 +130,7 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
         return NULL;
     }
 
+    // Handle the closing of the socket and any dynamic memory associated with it to avoid errors
     close(socket_file_descriptor);
 
     free(data_received);
@@ -132,5 +139,5 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
     free(socket_data->poll_descriptor);
     socket_data->poll_descriptor = NULL;
 
-    return bufferjson;
+    return bufferjson; // It is up to the user to free the json buffer using cJSON_Delete()
 }
