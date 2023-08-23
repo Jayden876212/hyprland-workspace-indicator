@@ -62,22 +62,28 @@ char * get_hyprland_socket(Socket socket_type) {
 }
 
 int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socket_data) {
+    // Grab the path of the hyprland socket to communicate with it
     char * socket_path = get_hyprland_socket(socket_type);
-    struct sockaddr_un address;
+    if (socket_path == NULL) {
+        fprintf(stderr, "Error: Failed to obtain hyprland socket path.\n");
+        free(socket_path);
+        return -1;
+    }
 
     socket_data->poll_descriptor->fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    int socket_file_descriptor = socket_data->poll_descriptor->fd;
 
-    if ((socket_data->poll_descriptor->fd) == -1) {
+    if (socket_file_descriptor == -1) {
         perror("socket");
         free(socket_path);
         return -1;
     }
 
+    struct sockaddr_un address;
     address.sun_family = AF_UNIX;
     strncpy(address.sun_path, socket_path, sizeof(address.sun_path) - 1);
     free(socket_path);
-
-    if (connect(socket_data->poll_descriptor->fd, (struct sockaddr*)&address, sizeof(address)) == -1) {
+    if (connect(socket_file_descriptor, (struct sockaddr*)&address, sizeof(address)) == -1) {
         perror("connect");
         return -1;
     }
@@ -85,37 +91,40 @@ int grab_information_from_hyprland_socket(Socket socket_type, SocketData * socke
     return 0;
 }
 
-cJSON * grab_json_from_socket_data(const char * cmd, SocketData * socket_data) {
-    grab_information_from_hyprland_socket(SOCKET, socket_data);
-
-    const char * message = cmd;
-    send(socket_data->poll_descriptor->fd, message, strlen(message), 0);
-
-
-    ssize_t num_bytes_received = recv(socket_data->poll_descriptor->fd, socket_data->data_received, MAX_BUFFER_SIZE, 0);
-    if (num_bytes_received == -1) {
-        perror("recv");
-        free(socket_data->data_received);
+cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_data) {
+    int connection_result = grab_information_from_hyprland_socket(SOCKET, socket_data);
+    if (connection_result == -1) {
+        fprintf(stderr, "Error: Failed to grab information from hyprland socket\n");
         return NULL;
     }
 
-    socket_data->data_received[num_bytes_received] = '\0';
+    int socket_file_descriptor = socket_data->poll_descriptor->fd;
+    char * data_received = socket_data->data_received;
+    
+    send(socket_file_descriptor, command, strlen(command), 0);
 
+    ssize_t num_bytes_received = recv(socket_file_descriptor, data_received, MAX_BUFFER_SIZE, 0);
+    if (num_bytes_received == -1) {
+        perror("recv");
+        free(data_received);
+        return NULL;
+    }
 
+    data_received[num_bytes_received] = '\0';
 
-    cJSON * bufferjson = cJSON_Parse(socket_data->data_received);
+    cJSON * bufferjson = cJSON_Parse(data_received);
     if (bufferjson == NULL) {
         const char * error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL) {
             fprintf(stderr, "JSON parsing error at : %s\n", error_ptr);
         }
-        free(socket_data->data_received);
+        free(data_received);
         return NULL;
     }
 
-    close(socket_data->poll_descriptor->fd);
+    close(socket_file_descriptor);
 
-    free(socket_data->data_received);
+    free(data_received);
     socket_data->data_received = NULL;
 
     free(socket_data->poll_descriptor);
