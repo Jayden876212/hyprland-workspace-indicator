@@ -83,8 +83,8 @@ int create_activeworkspace_array(HyprlandData * hyprland_data) {
         activeworkspace_array[i] = 0b0000000000000000; 
 
         // Parse the JSON to grab the monitor name.
-        cJSON * ith_element = cJSON_GetArrayItem(hyprland_data->monitors, i);
-        cJSON * monitor_name_obj = cJSON_GetObjectItem(ith_element, "name");
+        cJSON * ith_monitor = cJSON_GetArrayItem(hyprland_data->monitors, i);
+        cJSON * monitor_name_obj = cJSON_GetObjectItem(ith_monitor, "name");
         char * monitor_name = monitor_name_obj->valuestring;
 
         // See previous comments on the other function
