@@ -42,7 +42,7 @@ int create_workspace_array(HyprlandData * hyprland_data) {
             // though. This can be used to reduce screen clutter and improve readability on each 
             // monitor by only showing the used workspaces on THAT specific monitor.
             cJSON * active_monitor_obj = cJSON_GetObjectItem(vth_workspace, "monitor");
-            char * active_monitor = active_mreduceonitor_obj->valuestring;
+            char * active_monitor = active_monitor_obj->valuestring;
 
             // Grab the ID of the workspace that the user can see what ID the workspace is
             // specifically in our resulting JSON array later on (via the array position).
