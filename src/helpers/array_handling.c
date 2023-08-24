@@ -70,12 +70,13 @@ int create_workspace_array(HyprlandData * hyprland_data) {
 int create_activeworkspace_array(HyprlandData * hyprland_data) {
     // Initialise pointers to improve code readability (reduces width).
     uint16_t * activeworkspace_array = hyprland_data->activeworkspace_array;
+    cJSON * activeworkspace = hyprland_data->activeworkspace;
 
     // Perform steps needed to get the monitor output name (for comparison) and the id of the
     // workspace ID to show the user using an array (ID is position in the array).
-    cJSON * active_monitor_obj = cJSON_GetObjectItem(hyprland_data->activeworkspace, "monitor");
+    cJSON * active_monitor_obj = cJSON_GetObjectItem(activeworkspace, "monitor");
     char * active_monitor = active_monitor_obj->valuestring;
-    cJSON * workspace_id_obj = cJSON_GetObjectItem(hyprland_data->activeworkspace, "id");
+    cJSON * workspace_id_obj = cJSON_GetObjectItem(activeworkspace, "id");
     int workspace_id = workspace_id_obj->valueint;
 
     // Loop through monitors.
