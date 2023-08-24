@@ -19,7 +19,6 @@ int create_workspace_array(HyprlandData * hyprland_data) {
         cJSON * ith_monitor = cJSON_GetArrayItem(hyprland_data->monitors, i);
         if (ith_monitor == NULL) {
             return -1;
-            cJSON_Delete(hyprland_data->monitors);
         }
         cJSON * monitor_name_obj = cJSON_GetObjectItem(ith_monitor, "name");
         char * monitor_name = monitor_name_obj->valuestring;
@@ -28,7 +27,6 @@ int create_workspace_array(HyprlandData * hyprland_data) {
             cJSON * vth_workspace = cJSON_GetArrayItem(hyprland_data->workspaces, v);
             if (vth_workspace == NULL) {
                 return -1;
-                cJSON_Delete(hyprland_data->monitors);
             }
 
             cJSON * active_monitor_obj = cJSON_GetObjectItem(vth_workspace, "monitor");
