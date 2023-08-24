@@ -85,7 +85,9 @@ int create_activeworkspace_array(HyprlandData * hyprland_data) {
 
         if (strcmp(active_monitor, monitor_name) == 0) {
             int target_workspace_id = (workspace_id != 10) ? workspace_id : 0;
-            activeworkspace_array[i] = turn_on_bit_in_array(activeworkspace_array[i], target_workspace_id);
+            activeworkspace_array[i] = turn_on_bit_in_array(
+                activeworkspace_array[i], target_workspace_id
+            );
         }
     }
 
