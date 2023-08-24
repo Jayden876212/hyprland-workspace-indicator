@@ -77,7 +77,7 @@ int create_activeworkspace_array(HyprlandData * hyprland_data) {
     int workspace_id = workspace_id_obj->valueint;
 
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
-        activeworkspace_array[i] = BITWISE_FALSE; 
+        activeworkspace_array[i] = 0b0000000000000000; 
 
         cJSON * ith_element = cJSON_GetArrayItem(hyprland_data->monitors, i);
         cJSON * monitor_name_obj = cJSON_GetObjectItem(ith_element, "name");
