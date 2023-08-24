@@ -7,6 +7,8 @@
 #define HIS_PATH_BUFFER_SIZE 24
 #define WORKSPACES_AMOUNT 10
 
+#define BITWISE_FALSE 0
+
 typedef enum {
     SOCKET,
     SOCKET2
