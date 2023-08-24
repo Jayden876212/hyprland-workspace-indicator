@@ -14,7 +14,7 @@ int create_workspace_array(HyprlandData * hyprland_data) {
     uint16_t * workspace_array = hyprland_data->workspace_array;
 
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
-        workspace_array[i] = BITWISE_FALSE; 
+        workspace_array[i] = 0b0000000000000000; 
 
         cJSON * ith_monitor = cJSON_GetArrayItem(hyprland_data->monitors, i);
         if (ith_monitor == NULL) {
