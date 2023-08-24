@@ -11,8 +11,11 @@
 #include "utils/bit_handling.h"
 
 int create_workspace_array(HyprlandData * hyprland_data) {
+    uint16_t * workspace_array = hyprland_data->workspace_array;
+
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
-        hyprland_data->workspace_array[i] = BITWISE_FALSE; 
+        workspace_array[i] = BITWISE_FALSE; 
+
         cJSON * ith_monitor = cJSON_GetArrayItem(hyprland_data->monitors, i);
         if (ith_monitor == NULL) {
             return -1;
@@ -36,7 +39,7 @@ int create_workspace_array(HyprlandData * hyprland_data) {
 
             if (strcmp(active_monitor, monitor_name) == 0) {
                 int target_workspace_id = (workspace_id != 10) ? workspace_id : 0;
-                hyprland_data->workspace_array[i] = turn_on_bit_in_array(hyprland_data->workspace_array[i], target_workspace_id);
+                workspace_array[i] = turn_on_bit_in_array(workspace_array[i], target_workspace_id);
             }
         }
     }
