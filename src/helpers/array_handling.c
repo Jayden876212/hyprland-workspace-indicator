@@ -68,6 +68,8 @@ int create_workspace_array(HyprlandData * hyprland_data) {
 }
 
 int create_activeworkspace_array(HyprlandData * hyprland_data) {
+    uint16_t * activeworkspace_array = hyprland_data->activeworkspace_array;
+
     cJSON * active_monitor_obj = cJSON_GetObjectItem(hyprland_data->activeworkspace, "monitor");
     char * active_monitor = active_monitor_obj->valuestring;
 
@@ -75,7 +77,7 @@ int create_activeworkspace_array(HyprlandData * hyprland_data) {
     int workspace_id = workspace_id_obj->valueint;
 
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
-        hyprland_data->activeworkspace_array[i] = BITWISE_FALSE; 
+        activeworkspace_array[i] = BITWISE_FALSE; 
 
         cJSON * ith_element = cJSON_GetArrayItem(hyprland_data->monitors, i);
         cJSON * monitor_name_obj = cJSON_GetObjectItem(ith_element, "name");
@@ -83,7 +85,7 @@ int create_activeworkspace_array(HyprlandData * hyprland_data) {
 
         if (strcmp(active_monitor, monitor_name) == 0) {
             int target_workspace_id = (workspace_id != 10) ? workspace_id : 0;
-            hyprland_data->activeworkspace_array[i] = turn_on_bit_in_array(hyprland_data->activeworkspace_array[i], target_workspace_id);
+            activeworkspace_array[i] = turn_on_bit_in_array(activeworkspace_array[i], target_workspace_id);
         }
     }
 
