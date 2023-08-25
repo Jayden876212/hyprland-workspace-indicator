@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 // At first, bit manipulation might seem like a strange technique to create an array. After all it
 // does not use traditional notation for an array, making the code more verbose and less readable. 
@@ -40,11 +41,11 @@ uint16_t turn_on_bit_in_array(uint16_t bit_array, unsigned int position) {
     return bit_array;
 }
 
-unsigned int access_bit_array(uint16_t bit_array, unsigned int position) {
+bool access_bit_array(uint16_t bit_array, unsigned int position) {
     // Check if the function user's given position is out of bounds for safety.
     if (position > 16) {
         fprintf(stderr, "Error accessing bit array: Given position is out of range.\n");
-        return 2;
+        return false;
     }
 
     // Take away 15 from the more human-readable position given by the function user.
@@ -56,5 +57,9 @@ unsigned int access_bit_array(uint16_t bit_array, unsigned int position) {
     // Use the rightmost bit to compare 1 with the isolated bit in the bit array using AND.
     bit_array &= 0b0000000000000001;
 
-    return bit_array;
+    // We want to return a boolean value rather than a 16-bit int because it uses 8 bit (half as
+    // much memory). It is also more readable as the resulting JSON array will use a bool.
+    bool accessed_bit_value = bit_array;
+
+    return accessed_bit_value;
 }
