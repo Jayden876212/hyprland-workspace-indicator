@@ -25,6 +25,12 @@ int print_binary(uint16_t integer) { // This is a test function for debugging on
 }
 
 uint16_t turn_on_bit_in_array(uint16_t bit_array, unsigned int position) {
+    // Check if the function user's given position is out of bounds for safety.
+    if (position > 16) {
+        fprintf(stderr, "Error accessing bit array: Given position is out of range.\n");
+        return bit_array;
+    }
+
     // Shift a bit based on the position given by the function user.
     uint16_t bit = 0b1000000000000000 >> position;
 
@@ -35,6 +41,12 @@ uint16_t turn_on_bit_in_array(uint16_t bit_array, unsigned int position) {
 }
 
 unsigned int access_bit_array(uint16_t bit_array, unsigned int position) {
+    // Check if the function user's given position is out of bounds for safety.
+    if (position > 16) {
+        fprintf(stderr, "Error accessing bit array: Given position is out of range.\n");
+        return 2;
+    }
+
     // Take away 15 from the more human-readable position given by the function user.
     int true_position = 15 - position; 
 
