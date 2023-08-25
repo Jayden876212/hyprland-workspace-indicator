@@ -24,7 +24,7 @@ int print_binary(uint16_t integer) { // This is a test function for debugging on
     return 0;
 }
 
-uint16_t turn_on_bit_in_array(uint16_t bit_array, int position) {
+uint16_t turn_on_bit_in_array(uint16_t bit_array, unsigned int position) {
     // Shift a bit based on the position given by the function user.
     uint16_t bit = 0b1000000000000000 >> position;
 
@@ -34,7 +34,7 @@ uint16_t turn_on_bit_in_array(uint16_t bit_array, int position) {
     return bit_array;
 }
 
-unsigned int access_bit_array(uint16_t bit_array, int position) {
+unsigned int access_bit_array(uint16_t bit_array, unsigned int position) {
     // Take away 15 from the more human-readable position given by the function user.
     int true_position = 15 - position; 
 
