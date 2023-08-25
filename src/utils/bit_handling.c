@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <stdint.h>
 
+// At first, bit manipulation might seem like a strange technique to create an array. After all it
+// does not use traditional notation for a bit array, making the code more verbose and less
+// readable. However, each boolean value in C uses a byte (8 bits) therefore a person with for 
+// example 3 monitors would have a 2D array which uses a total of 3 (amount of monitors) * 10
+// (amount of workspaces) * 8 (amount of bits in a boolean value), which equals 240 bytes. However,
+// the same person using a 1D integer array (a 2D bit array) would be using 3 (amount of monitors) *
+// 16 (amount of bits in a 16-bit integer) which equals 48 bits.
+
 int print_binary(uint16_t integer) { // This is a test function for debugging only.
     printf("16-bit binary representation of %u: ", integer);
 
@@ -17,7 +25,7 @@ int print_binary(uint16_t integer) { // This is a test function for debugging on
 }
 
 uint16_t turn_on_bit_in_array(uint16_t bit_array, int position) {
-    // Shift the bit based on the position given by the function user.
+    // Shift a bit based on the position given by the function user.
     uint16_t bit = 0b1000000000000000 >> position;
 
     // Perform OR on the bit and the existing bit_array to turn on the bit to 1.
