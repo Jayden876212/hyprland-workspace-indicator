@@ -133,13 +133,7 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
     }
 
     // Handle the closing of the socket and any dynamic memory associated with it to avoid errors.
-    close(socket_file_descriptor);
-
-    free(data_received);
-    socket_data->data_received = NULL;
-
-    free(socket_data->poll_descriptor);
-    socket_data->poll_descriptor = NULL;
+    delete_socket_data_structure(socket_data);
 
     return bufferjson; // It is up to the user to free the json buffer using cJSON_Delete().
 }

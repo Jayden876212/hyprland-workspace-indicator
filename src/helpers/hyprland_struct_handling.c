@@ -96,6 +96,7 @@ int delete_socket_data_structure(SocketData * socket_data) {
     }
 
     cleanup_socket_data_structure(socket_data);
+    free(socket_data);
 
     return 0;
 }
