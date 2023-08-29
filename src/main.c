@@ -77,7 +77,6 @@ int main() {
                 strstr(data_received, search_string_focusedmon)) {
                 initialize_and_print_workspace_info_as_json();
             }
-            fflush(stdout);
         }
     }
 
