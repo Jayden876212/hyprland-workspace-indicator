@@ -38,7 +38,17 @@ int main() {
     signal(SIGINT, sig_int_handler);
 
     SocketData * events_data = initialise_socket_data_structure();
-    set_up_hyprland_socket(SOCKET2, events_data);
+    if (events_data == NULL) {
+        fprintf(stderr, "Error: Failed to allocate socket data structure.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int hyprland_socket_creation_result = set_up_hyprland_socket(SOCKET2, events_data);
+    if (hyprland_socket_creation_result == -1) {
+        fprintf(stderr, "Error: unable to set up hyprland socket.\n");
+        delete_socket_data_structure(events_data);
+        exit(EXIT_FAILURE);
+    }
     
     while (1) {
         if (poll(events_data->poll_descriptor, 1, -1) == -1) {
