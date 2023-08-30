@@ -59,8 +59,8 @@ void poll_for_socket_events(void (*event_processor)(), int (*function_executed)(
 
 void handle_workspace_socket_events(int (*function_executed)()) {
     char * data_received = events_data->data_received;
-    char * search_string_workspace = "workspace>>";
-    char * search_string_focusedmon = "focusedmon>>";
+    char * search_string_workspace = EVENT_WORKSPACE_CHANGED;
+    char * search_string_focusedmon = EVENT_MONITOR_CHANGED;
     if (strstr(data_received, search_string_workspace) ||
         strstr(data_received, search_string_focusedmon)) {
         function_executed();

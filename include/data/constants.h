@@ -9,6 +9,9 @@
 
 #define BITWISE_FALSE 0
 
+#define EVENT_WORKSPACE_CHANGED "workspace>>"
+#define EVENT_MONITOR_CHANGED "focusedmon>>"
+
 typedef enum {
     SOCKET,
     SOCKET2
