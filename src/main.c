@@ -20,7 +20,7 @@
 
 SocketData * events_data = NULL;
 
-void sig_int_handler(int signum) {
+static void sig_int_handler(int signum) {
     delete_socket_data_structure(events_data);
     fprintf(stderr, "Exiting due to interrupt. (signal = %d)\n", signum);
     exit(signum);
