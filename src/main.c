@@ -1,14 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <string.h>
 #include <unistd.h>
-#include <poll.h>
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <sys/wait.h>
+#include <signal.h>
 
 #include <cjson/cJSON.h>
 
@@ -17,7 +11,6 @@
 #include "data/data_structures.h"
 
 // include/helpers
-#include "helpers/array_handling.h"
 #include "helpers/json_handling.h"
 #include "helpers/hyprland_struct_handling.h"
 
