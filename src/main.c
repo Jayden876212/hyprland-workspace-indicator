@@ -32,11 +32,10 @@ void sig_int_handler(int signum) {
     exit(signum);
 }
 
-void poll_for_socket_events(void (*event_processor)(), int (*function_executed)()) {
+int poll_for_socket_events(void (*event_processor)(), int (*function_executed)()) {
     if (poll(events_data->poll_descriptor, 1, -1) == -1) {
         perror("poll");
-        delete_socket_data_structure(events_data);
-        exit(EXIT_FAILURE);
+        return -1;
     }
     if (events_data->poll_descriptor->revents & POLLIN) {
         int * file_descriptor = &(events_data->poll_descriptor->fd);
@@ -44,17 +43,17 @@ void poll_for_socket_events(void (*event_processor)(), int (*function_executed)(
         ssize_t bytes_received = recv(*file_descriptor, data_received, MAX_BUFFER_SIZE + 1, 0);
         if (bytes_received == -1) {
             perror("recv");
-            delete_socket_data_structure(events_data);
-            exit(EXIT_FAILURE);
+            return -1;
         } else if (bytes_received == 0) {
             fprintf(stderr, "Error: Connection closed by the server.\n");
-            delete_socket_data_structure(events_data);
-            exit(EXIT_FAILURE);
+            return -1;
         }
 
         events_data->data_received[bytes_received] = '\0';
         event_processor(function_executed);
     }
+
+    return 0;
 }
 
 void handle_workspace_socket_events(int (*function_executed)()) {
@@ -72,13 +71,13 @@ int main() {
 
     events_data = initialise_socket_data_structure();
     if (events_data == NULL) {
-        fprintf(stderr, "Error: Failed to allocate socket data structure.\n");
+        fprintf(stderr, "Error: Failed to allocate socket data structure. Exiting.\n");
         exit(EXIT_FAILURE);
     }
 
     int hyprland_socket_creation_result = set_up_hyprland_socket(SOCKET2, events_data);
     if (hyprland_socket_creation_result == -1) {
-        fprintf(stderr, "Error: unable to set up hyprland socket.\n");
+        fprintf(stderr, "Error: unable to set up hyprland socket. Exiting.\n");
         delete_socket_data_structure(events_data);
         exit(EXIT_FAILURE);
     }
@@ -87,7 +86,12 @@ int main() {
     int (*function_executed)() = initialise_and_print_workspace_info_as_json;
     
     while (1) {
-        poll_for_socket_events(event_handler, function_executed);
+        int poll_result = poll_for_socket_events(event_handler, function_executed);
+        if (poll_result == -1) {
+            fprintf(stderr, "Error: failed to poll for socket events. Exiting.\n");
+            delete_socket_data_structure(events_data);
+            exit(EXIT_FAILURE);
+        }
     }
 
     delete_socket_data_structure(events_data);
