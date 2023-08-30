@@ -28,4 +28,6 @@ typedef struct {
     struct pollfd *poll_descriptor;
 } SocketData;
 
+extern SocketData * events_data;
+
 #endif
