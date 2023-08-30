@@ -27,17 +27,50 @@
 SocketData * events_data = NULL;
 
 void sig_int_handler(int signum) {
-    if (events_data) {
-        delete_socket_data_structure(events_data);
-    }
+    delete_socket_data_structure(events_data);
     fprintf(stderr, "Exiting due to interrupt. (sigint)\n");
     exit(signum);
+}
+
+void poll_for_socket_events(void (*event_processor)(), int (*function_executed)()) {
+    if (poll(events_data->poll_descriptor, 1, -1) == -1) {
+        perror("poll");
+        delete_socket_data_structure(events_data);
+        exit(EXIT_FAILURE);
+    }
+    if (events_data->poll_descriptor->revents & POLLIN) {
+        int * file_descriptor = &(events_data->poll_descriptor->fd);
+        char * data_received = events_data->data_received;
+        ssize_t bytes_received = recv(*file_descriptor, data_received, MAX_BUFFER_SIZE + 1, 0);
+        if (bytes_received == -1) {
+            perror("recv");
+            delete_socket_data_structure(events_data);
+            exit(EXIT_FAILURE);
+        } else if (bytes_received == 0) {
+            fprintf(stderr, "Error: Connection closed by the server.\n");
+            delete_socket_data_structure(events_data);
+            exit(EXIT_FAILURE);
+        }
+
+        events_data->data_received[bytes_received] = '\0';
+        event_processor(function_executed);
+    }
+}
+
+void handle_workspace_socket_events(int (*function_executed)()) {
+    char * data_received = events_data->data_received;
+    char * search_string_workspace = "workspace>>";
+    char * search_string_focusedmon = "focusedmon>>";
+    if (strstr(data_received, search_string_workspace) ||
+        strstr(data_received, search_string_focusedmon)) {
+        function_executed();
+    }
 }
 
 int main() {
     signal(SIGINT, sig_int_handler);
 
-    SocketData * events_data = initialise_socket_data_structure();
+    events_data = initialise_socket_data_structure();
     if (events_data == NULL) {
         fprintf(stderr, "Error: Failed to allocate socket data structure.\n");
         exit(EXIT_FAILURE);
@@ -51,33 +84,7 @@ int main() {
     }
     
     while (1) {
-        if (poll(events_data->poll_descriptor, 1, -1) == -1) {
-            perror("poll");
-            delete_socket_data_structure(events_data);
-            exit(EXIT_FAILURE);
-        }
-        if (events_data->poll_descriptor->revents & POLLIN) {
-            int * file_descriptor = &(events_data->poll_descriptor->fd);
-            char * data_received = events_data->data_received;
-            ssize_t bytes_received = recv(*file_descriptor, data_received, MAX_BUFFER_SIZE + 1, 0);
-            if (bytes_received == -1) {
-                perror("recv");
-                delete_socket_data_structure(events_data);
-                exit(EXIT_FAILURE);
-            } else if (bytes_received == 0) {
-                fprintf(stderr, "Error: Connection closed by the server.\n");
-                delete_socket_data_structure(events_data);
-                exit(EXIT_FAILURE);
-            }
-
-            events_data->data_received[bytes_received] = '\0';
-            char * search_string_workspace = "workspace>>";
-            char * search_string_focusedmon = "focusedmon>>";
-            if (strstr(data_received, search_string_workspace) ||
-                strstr(data_received, search_string_focusedmon)) {
-                initialize_and_print_workspace_info_as_json();
-            }
-        }
+        poll_for_socket_events(handle_workspace_socket_events, initialise_and_print_workspace_info_as_json);
     }
 
     delete_socket_data_structure(events_data);

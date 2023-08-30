@@ -45,7 +45,7 @@ HyprlandData * initialise_hyprland_data_structure() {
     return hyprland_data;
 }
 
-int delete_hyprland_data_structure(HyprlandData * hyprland_data) {
+void delete_hyprland_data_structure(HyprlandData * hyprland_data) {
     cJSON_Delete(hyprland_data->monitors);
     hyprland_data->monitors = NULL;
     cJSON_Delete(hyprland_data->activeworkspace);
@@ -58,8 +58,6 @@ int delete_hyprland_data_structure(HyprlandData * hyprland_data) {
 
     free(hyprland_data);
     hyprland_data = NULL;
-
-    return 0;
 }
 
 SocketData * initialise_socket_data_structure() {
@@ -81,22 +79,20 @@ void cleanup_socket_data_structure(SocketData * socket_data) {
     socket_data->poll_descriptor = NULL;
 }
 
-int delete_socket_data_structure(SocketData * socket_data) {
+void delete_socket_data_structure(SocketData * socket_data) {
     if (socket_data == NULL) {
         fprintf(stderr, "Error accessing SocketData structure: SocketData does not point to valid memory (NULL).\n");
         cleanup_socket_data_structure(socket_data);
-        return -1;
+        return;
     }
 
     int close_result = close(socket_data->poll_descriptor->fd);
     if (close_result == -1) {
         fprintf(stderr, "Error closing socket: %s\n", strerror(errno));
         cleanup_socket_data_structure(socket_data);
-        return -1;
+        return;
     }
 
     cleanup_socket_data_structure(socket_data);
     free(socket_data);
-
-    return 0;
 }
