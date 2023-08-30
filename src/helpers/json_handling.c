@@ -44,7 +44,7 @@ int print_workspaces_json_array(HyprlandData * hyprland_data) {
     return 0;
 }
 
-int initialize_and_print_workspace_info_as_json() {
+int initialise_and_print_workspace_info_as_json() {
     HyprlandData * hyprland_data = initialise_hyprland_data_structure();
 
     create_workspace_array(hyprland_data);
