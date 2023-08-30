@@ -82,9 +82,12 @@ int main() {
         delete_socket_data_structure(events_data);
         exit(EXIT_FAILURE);
     }
+
+    void (*event_handler)(int (*func_executed)()) = handle_workspace_socket_events;
+    int (*function_executed)() = initialise_and_print_workspace_info_as_json;
     
     while (1) {
-        poll_for_socket_events(handle_workspace_socket_events, initialise_and_print_workspace_info_as_json);
+        poll_for_socket_events(event_handler, function_executed);
     }
 
     delete_socket_data_structure(events_data);
