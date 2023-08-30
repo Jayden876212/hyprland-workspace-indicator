@@ -107,14 +107,13 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
     char * data_received = socket_data->data_received;
     if (send(socket_file_descriptor, command, strlen(command), 0) == -1) {
         perror("send");
-        free(data_received);
+        return NULL;
     }
 
     // Receive data into a buffer so it can be read as string to be parsed by cJSON.
     ssize_t num_bytes_received = recv(socket_file_descriptor, data_received, MAX_BUFFER_SIZE, 0);
     if (num_bytes_received == -1) {
         perror("recv");
-        free(data_received);
         return NULL;
     }
 
@@ -128,7 +127,6 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
         if (error_ptr != NULL) {
             fprintf(stderr, "JSON parsing error at : %s\n", error_ptr);
         }
-        free(data_received);
         return NULL;
     }
 
