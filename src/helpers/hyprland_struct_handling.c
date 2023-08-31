@@ -30,15 +30,15 @@ HyprlandData * initialise_hyprland_data_structure() {
     hyprland_data = (HyprlandData*)malloc(sizeof(HyprlandData));
 
     SocketData * monitors_data = initialise_socket_data_structure();
-    cJSON * monitors = grab_json_from_socket_data("-j/monitors", monitors_data);
+    cJSON * monitors = grab_json_from_socket_data(CMD_MONITORS, monitors_data);
     hyprland_data->monitors = monitors;
 
     SocketData * workspaces_data = initialise_socket_data_structure();
-    cJSON * workspaces = grab_json_from_socket_data("-j/workspaces", workspaces_data);
+    cJSON * workspaces = grab_json_from_socket_data(CMD_WORKSPACES, workspaces_data);
     hyprland_data->workspaces = workspaces;
 
     SocketData * activeworkspace_data = initialise_socket_data_structure();
-    cJSON * activeworkspace = grab_json_from_socket_data("-j/activeworkspace", activeworkspace_data); 
+    cJSON * activeworkspace = grab_json_from_socket_data(CMD_ACTIVEWORKSPACE, activeworkspace_data); 
     hyprland_data->activeworkspace = activeworkspace;
 
     hyprland_data->monitors_length = cJSON_GetArraySize(hyprland_data->monitors);

@@ -12,6 +12,10 @@
 #define EVENT_WORKSPACE_CHANGED "workspace>>"
 #define EVENT_MONITOR_CHANGED "focusedmon>>"
 
+#define CMD_MONITORS "-j/monitors"
+#define CMD_WORKSPACES "-j/workspaces"
+#define CMD_ACTIVEWORKSPACE "-j/activeworkspace"
+
 typedef enum {
     SOCKET,
     SOCKET2
