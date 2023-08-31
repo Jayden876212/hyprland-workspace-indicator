@@ -26,21 +26,31 @@
 #include "utils/hyprland_socket_handling.h"
 
 HyprlandData * initialise_hyprland_data_structure() {
-    HyprlandData * hyprland_data = (HyprlandData*)malloc(sizeof(HyprlandData));
+    HyprlandData * hyprland_data;
+    hyprland_data = (HyprlandData*)malloc(sizeof(HyprlandData));
 
+    SocketData * monitors_data = initialise_socket_data_structure();
+    cJSON * monitors = grab_json_from_socket_data("-j/monitors", monitors_data);
+    hyprland_data->monitors = monitors;
 
-    SocketData * hyprctl_data_monitors = initialise_socket_data_structure();
-    hyprland_data->monitors = grab_json_from_socket_data("-j/monitors", hyprctl_data_monitors);
-    SocketData * hyprctl_data_workspaces = initialise_socket_data_structure();
-    hyprland_data->workspaces = grab_json_from_socket_data("-j/workspaces", hyprctl_data_workspaces);
-    SocketData * hyprctl_data_activeworkspace = initialise_socket_data_structure();
-    hyprland_data->activeworkspace = grab_json_from_socket_data("-j/activeworkspace", hyprctl_data_activeworkspace);
+    SocketData * workspaces_data = initialise_socket_data_structure();
+    cJSON * workspaces = grab_json_from_socket_data("-j/workspaces", workspaces_data);
+    hyprland_data->workspaces = workspaces;
+
+    SocketData * activeworkspace_data = initialise_socket_data_structure();
+    cJSON * activeworkspace = grab_json_from_socket_data("-j/activeworkspace", activeworkspace_data); 
+    hyprland_data->activeworkspace = activeworkspace;
 
     hyprland_data->monitors_length = cJSON_GetArraySize(hyprland_data->monitors);
     hyprland_data->workspaces_length = cJSON_GetArraySize(hyprland_data->workspaces);
 
-    hyprland_data->workspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
-    hyprland_data->activeworkspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
+    uint16_t * workspace_array;
+    workspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
+    hyprland_data->workspace_array = workspace_array;
+
+    uint16_t * activeworkspace_array;
+    activeworkspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
+    hyprland_data->activeworkspace_array = activeworkspace_array;
 
     return hyprland_data;
 }
@@ -81,7 +91,7 @@ void cleanup_socket_data_structure(SocketData * socket_data) {
 
 void delete_socket_data_structure(SocketData * socket_data) {
     if (socket_data == NULL) {
-        fprintf(stderr, "Error accessing SocketData structure: SocketData does not point to valid memory (NULL).\n");
+        fprintf(stderr, "Error accessing SocketData struct: SocketData invalid memory (NULL).\n");
         cleanup_socket_data_structure(socket_data);
         return;
     }
