@@ -18,23 +18,24 @@
 #include "utils/hyprland_socket_handling.h"
 #include "utils/bit_handling.h"
 
+void print_array_json_formatted(uint16_t bit_array) {
+    for (int n = 0; n < WORKSPACES_AMOUNT; ++n) {
+        bool accessed_bit = access_bit_array(bit_array, n);
+        accessed_bit ? printf("true") : printf("false");
+
+        if (n != WORKSPACES_AMOUNT - 1)
+            printf(",");
+    }
+}
+
 int print_workspaces_json_array(HyprlandData * hyprland_data) {
     printf("[");
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
         printf("{\"workspaces\":[");
-        for (int n = 0; n < WORKSPACES_AMOUNT; ++n) {
-            bool accessed_bit = access_bit_array(hyprland_data->workspace_array[i], n);
-            accessed_bit ? printf("true") : printf("false");
-            if (n != WORKSPACES_AMOUNT - 1)
-                printf(",");
-        }
+        print_array_json_formatted(hyprland_data->workspace_array[i]);
+
         printf("],\"activeworkspaces\":[");
-        for (int n = 0; n < WORKSPACES_AMOUNT; ++n) {
-            bool accessed_bit = access_bit_array(hyprland_data->activeworkspace_array[i], n);
-            accessed_bit ? printf("true") : printf("false");
-            if (n != WORKSPACES_AMOUNT - 1)
-                printf(",");
-        }
+        print_array_json_formatted(hyprland_data->activeworkspace_array[i]);
         printf("]}");
         if (i != hyprland_data->monitors_length - 1)
             printf(",");
