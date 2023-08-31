@@ -23,13 +23,15 @@ int print_workspaces_json_array(HyprlandData * hyprland_data) {
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
         printf("{\"workspaces\":[");
         for (int n = 0; n < WORKSPACES_AMOUNT; ++n) {
-            (access_bit_array(hyprland_data->workspace_array[i], n) == false) ? printf("false") : printf("true");
+            bool accessed_bit = access_bit_array(hyprland_data->workspace_array[i], n);
+            accessed_bit ? printf("true") : printf("false");
             if (n != WORKSPACES_AMOUNT - 1)
                 printf(",");
         }
         printf("],\"activeworkspaces\":[");
         for (int n = 0; n < WORKSPACES_AMOUNT; ++n) {
-            (access_bit_array(hyprland_data->activeworkspace_array[i], n) == false) ? printf("false") : printf("true");
+            bool accessed_bit = access_bit_array(hyprland_data->activeworkspace_array[i], n);
+            accessed_bit ? printf("true") : printf("false");
             if (n != WORKSPACES_AMOUNT - 1)
                 printf(",");
         }
