@@ -32,8 +32,6 @@ int poll_for_socket_events(SocketData * events_data, void (*event_processor)(), 
             return -1;
         }
 
-        events_data->data_received[bytes_received] = '\0';
-
         // Process the events using a user-specified event processor so we can check what events we
         // want to respond to. The response is carrying out the user-specified function_executed
         // function.
