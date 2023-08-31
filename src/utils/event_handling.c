@@ -9,7 +9,7 @@
 #include "data/constants.h"
 #include "data/data_structures.h"
 
-int poll_for_socket_events(void (*event_processor)(), int (*function_executed)()) {
+int poll_for_socket_events(SocketData * events_data, void (*event_processor)(), int (*function_executed)()) {
     if (poll(events_data->poll_descriptor, 1, -1) == -1) {
         perror("poll");
         return -1;
@@ -27,13 +27,13 @@ int poll_for_socket_events(void (*event_processor)(), int (*function_executed)()
         }
 
         events_data->data_received[bytes_received] = '\0';
-        event_processor(function_executed);
+        event_processor(events_data, function_executed);
     }
 
     return 0;
 }
 
-void handle_workspace_socket_events(int (*function_executed)()) {
+void handle_workspace_socket_events(SocketData * events_data, int (*function_executed)()) {
     char * data_received = events_data->data_received;
 
     if (strstr(data_received, EVENT_WORKSPACE_CHANGED) ||

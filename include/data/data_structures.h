@@ -28,6 +28,11 @@ typedef struct {
     struct pollfd *poll_descriptor;
 } SocketData;
 
-extern SocketData * events_data;
+extern SocketData * events_data_global;
+// The use of a global variable might seem like a strange choice here, but this is because
+// signal handlers don't accept any other arguments other than the signum. We set the global
+// variable to point to a local variable which is passed amongst multiple functions in
+// event_handling.c and hyprland_socket_handling.c, which is done to allow reusability of the code
+// without the use of a global variable.
 
 #endif
