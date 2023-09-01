@@ -25,21 +25,55 @@
 // include/utils
 #include "utils/hyprland_socket_handling.h"
 
+cJSON * allocate_and_grab_json(const char * cmd) {
+    SocketData * socket_data = initialise_socket_data_structure();
+    if (socket_data == NULL) {
+        fprintf(stderr, "Error: Failed to allocate socket data structure.\n");
+        return NULL;
+    }
+    cJSON * output_json = grab_json_from_socket_data(cmd, socket_data);
+    if (output_json == NULL) {
+        fprintf(stderr, "Error: Failed to grab JSON from socket data.\n");
+        return NULL;
+    }
+    return output_json;
+}
+
+int grab_hyprland_indicator_data_json(HyprlandData * hyprland_data) {
+    cJSON * monitors = allocate_and_grab_json(CMD_MONITORS);
+    if (monitors == NULL) {
+        return -1;
+    }
+    hyprland_data->monitors = monitors;
+
+    cJSON * workspaces = allocate_and_grab_json(CMD_WORKSPACES);
+    if (workspaces == NULL) {
+        return -1;
+    }
+    hyprland_data->workspaces = workspaces;
+
+    cJSON * activeworkspace = allocate_and_grab_json(CMD_ACTIVEWORKSPACE);
+    if (activeworkspace == NULL) {
+        return -1;
+    }
+    hyprland_data->activeworkspace = activeworkspace;
+    
+    return 0;
+}
+
 HyprlandData * initialise_hyprland_data_structure() {
     HyprlandData * hyprland_data;
     hyprland_data = (HyprlandData*)malloc(sizeof(HyprlandData));
+    if (hyprland_data == NULL) {
+        perror("malloc");
+        return NULL;
+    }
 
-    SocketData * monitors_data = initialise_socket_data_structure();
-    cJSON * monitors = grab_json_from_socket_data(CMD_MONITORS, monitors_data);
-    hyprland_data->monitors = monitors;
-
-    SocketData * workspaces_data = initialise_socket_data_structure();
-    cJSON * workspaces = grab_json_from_socket_data(CMD_WORKSPACES, workspaces_data);
-    hyprland_data->workspaces = workspaces;
-
-    SocketData * activeworkspace_data = initialise_socket_data_structure();
-    cJSON * activeworkspace = grab_json_from_socket_data(CMD_ACTIVEWORKSPACE, activeworkspace_data); 
-    hyprland_data->activeworkspace = activeworkspace;
+    int json_grab_result = grab_hyprland_indicator_data_json(hyprland_data);
+    if (json_grab_result == -1) {
+        fprintf(stderr, "Error: Failed to grab the necessary json data for the indicator.");
+        return NULL;
+    }
 
     hyprland_data->monitors_length = cJSON_GetArraySize(hyprland_data->monitors);
     hyprland_data->workspaces_length = cJSON_GetArraySize(hyprland_data->workspaces);

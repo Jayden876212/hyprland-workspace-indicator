@@ -56,7 +56,7 @@ int main() {
     // Set up the hyprland socket so it can be used to poll for events.
     int hyprland_socket_creation_result = set_up_hyprland_socket(SOCKET2, events_data);
     if (hyprland_socket_creation_result == -1) {
-        fprintf(stderr, "Error: unable to set up hyprland socket. Exiting.\n");
+        fprintf(stderr, "Error: Unable to set up hyprland socket. Exiting.\n");
         delete_socket_data_structure(events_data);
         exit(EXIT_FAILURE);
     }
@@ -79,7 +79,7 @@ int main() {
         // earlier.
         int poll_result = poll_for_socket_events(events_data, event_handler, function_executed);
         if (poll_result == -1) {
-            fprintf(stderr, "Error: failed to poll for socket events. Exiting.\n");
+            fprintf(stderr, "Error: Failed to poll for socket events. Exiting.\n");
             delete_socket_data_structure(events_data);
             exit(EXIT_FAILURE);
         }

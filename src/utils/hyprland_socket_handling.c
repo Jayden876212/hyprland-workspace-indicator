@@ -98,7 +98,7 @@ int set_up_hyprland_socket(Socket socket_type, SocketData * socket_data) {
 cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_data) {
     // Set up the hyprland socket so we can receive the information to be parsed from hyprland.
     if (set_up_hyprland_socket(SOCKET, socket_data) == -1) {
-        fprintf(stderr, "Error: Failed to grab information from hyprland socket\n");
+        fprintf(stderr, "Error: Failed to set up hyprland socket\n");
         return NULL;
     }
 
