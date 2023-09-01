@@ -17,7 +17,7 @@ int create_workspace_array(HyprlandData * hyprland_data) {
     // Loop through monitors.
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
         // Set each position (the ith monitor in this loop) in the workspace array to the int 0 to 
-        // clear it.
+        // clear/reset it.
         workspace_array[i] = 0b0000000000000000; 
 
         // Perform steps to grab the name of each monitor (the ith monitor in this loop) to verify 
@@ -81,7 +81,7 @@ int create_activeworkspace_array(HyprlandData * hyprland_data) {
 
     // Loop through monitors.
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
-        activeworkspace_array[i] = 0b0000000000000000; 
+        activeworkspace_array[i] = 0b0000000000000000; // Reset array.
 
         // Parse the JSON to grab the monitor name.
         cJSON * ith_monitor = cJSON_GetArrayItem(hyprland_data->monitors, i);
