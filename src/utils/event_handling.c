@@ -9,7 +9,8 @@
 #include "data/constants.h"
 #include "data/data_structures.h"
 
-int poll_for_socket_events(SocketData * events_data, void (*event_processor)(), int (*function_executed)()) {
+int poll_for_socket_events(SocketData * events_data, int (*event_processor)(),
+int (*function_executed)()) {
     // Poll the server for events that we can check for.
     if (poll(events_data->poll_descriptor, 1, -1) == -1) {
         perror("poll");
@@ -35,13 +36,17 @@ int poll_for_socket_events(SocketData * events_data, void (*event_processor)(), 
         // Process the events using a user-specified event processor so we can check what events we
         // want to respond to. The response is carrying out the user-specified function_executed
         // function.
-        event_processor(events_data, function_executed);
+        int process_result = event_processor(events_data, function_executed);
+        if (process_result == -1) {
+            fprintf(stderr, "Error: Event processor failed to respond to event.\n");
+            return -1;
+        }
     }
 
     return 0;
 }
 
-void handle_workspace_socket_events(SocketData * events_data, int (*function_executed)()) {
+int handle_workspace_socket_events(SocketData * events_data, int (*function_executed)()) {
     // Initialise pointer for better readability.
     char * data_received = events_data->data_received;
 
@@ -49,6 +54,11 @@ void handle_workspace_socket_events(SocketData * events_data, int (*function_exe
     // user-specified function.
     if (strstr(data_received, EVENT_WORKSPACE_CHANGED) ||
         strstr(data_received, EVENT_MONITOR_CHANGED)) {
-        function_executed();
+        int function_result = function_executed();
+        if (function_result == -1) {
+            fprintf(stderr, "Error: Response function that was expected failed.\n");
+            return -1;
+        }
     }
+    return 0;
 }

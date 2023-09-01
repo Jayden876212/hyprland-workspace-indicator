@@ -65,7 +65,7 @@ int main() {
     // are outputted.
     // The function event_handler processes events so we can check when the user interacts with the
     // compositor.
-    void (*event_handler)(SocketData *,int (*)()) = handle_workspace_socket_events;
+    int (*event_handler)(SocketData *,int (*)()) = handle_workspace_socket_events;
     // The function function_executed is to decide what action to take upon the event_handler's
     // condition having success (e.g. when the workspace is changed or when the monitor is
     // focused.)
