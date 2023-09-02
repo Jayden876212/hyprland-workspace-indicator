@@ -48,12 +48,15 @@ int grab_hyprland_indicator_data_json(HyprlandData * hyprland_data) {
 
     cJSON * workspaces = allocate_and_grab_json(CMD_WORKSPACES);
     if (workspaces == NULL) {
+        cJSON_Delete(monitors);
         return -1;
     }
     hyprland_data->workspaces = workspaces;
 
     cJSON * activeworkspace = allocate_and_grab_json(CMD_ACTIVEWORKSPACE);
     if (activeworkspace == NULL) {
+        cJSON_Delete(monitors);
+        cJSON_Delete(workspaces);
         return -1;
     }
     hyprland_data->activeworkspace = activeworkspace;
@@ -72,18 +75,41 @@ HyprlandData * initialise_hyprland_data_structure() {
     int json_grab_result = grab_hyprland_indicator_data_json(hyprland_data);
     if (json_grab_result == -1) {
         fprintf(stderr, "Error: Failed to grab the necessary json data for the indicator.");
+        free(hyprland_data);
         return NULL;
     }
 
+    if (!cJSON_IsArray(hyprland_data->monitors)) {
+        fprintf(stderr, "Error: Monitors not a valid JSON array. Update or report this issue.");
+        free(hyprland_data);
+        return NULL;
+    }
     hyprland_data->monitors_length = cJSON_GetArraySize(hyprland_data->monitors);
+
+    if (!cJSON_IsArray(hyprland_data->workspaces)) {
+        fprintf(stderr, "Error: Workspaces not a valid JSON array. Update or report this issue.");
+        free(hyprland_data);
+        return NULL;
+    }
     hyprland_data->workspaces_length = cJSON_GetArraySize(hyprland_data->workspaces);
 
     uint16_t * workspace_array;
     workspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
+    if (workspace_array == NULL) {
+        perror("malloc");
+        free(hyprland_data);
+        return NULL;
+    }
     hyprland_data->workspace_array = workspace_array;
 
     uint16_t * activeworkspace_array;
     activeworkspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
+    if (activeworkspace_array == NULL) {
+        perror("malloc");
+        free(hyprland_data->workspace_array);
+        free(hyprland_data);
+        return NULL;
+    }
     hyprland_data->activeworkspace_array = activeworkspace_array;
 
     return hyprland_data;
@@ -106,37 +132,42 @@ void delete_hyprland_data_structure(HyprlandData * hyprland_data) {
 
 SocketData * initialise_socket_data_structure() {
     SocketData * socket_data = (SocketData*)malloc(sizeof(SocketData));
+    if (socket_data == NULL) {
+        perror("malloc");
+        return NULL;
+    }
 
     socket_data->data_received = (char*)malloc(MAX_BUFFER_SIZE + 1);
+    if (socket_data->data_received == NULL) {
+        free(socket_data);
+        perror("malloc");
+        return NULL;
+    }
 
     socket_data->poll_descriptor = (struct pollfd*)malloc(sizeof(struct pollfd));
+    if (socket_data->poll_descriptor == NULL) {
+        free(socket_data->data_received);
+        free(socket_data);
+        perror("malloc");
+        return NULL;
+    }
+
     socket_data->poll_descriptor->events = POLLIN;
 
     return socket_data;
 }
 
-void cleanup_socket_data_structure(SocketData * socket_data) {
+void delete_socket_data_structure(SocketData * socket_data) {
+    int close_result = close(socket_data->poll_descriptor->fd);
+    if (close_result == -1) {
+        fprintf(stderr, "Error closing socket: %s\n", strerror(errno));
+    }
+
     free(socket_data->data_received);
     socket_data->data_received = NULL;
 
     free(socket_data->poll_descriptor);
     socket_data->poll_descriptor = NULL;
-}
 
-void delete_socket_data_structure(SocketData * socket_data) {
-    if (socket_data == NULL) {
-        fprintf(stderr, "Error accessing SocketData struct: SocketData invalid memory (NULL).\n");
-        cleanup_socket_data_structure(socket_data);
-        return;
-    }
-
-    int close_result = close(socket_data->poll_descriptor->fd);
-    if (close_result == -1) {
-        fprintf(stderr, "Error closing socket: %s\n", strerror(errno));
-        cleanup_socket_data_structure(socket_data);
-        return;
-    }
-
-    cleanup_socket_data_structure(socket_data);
     free(socket_data);
 }
