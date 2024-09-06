@@ -25,9 +25,16 @@ char * get_hyprland_socket(Socket socket_type) {
         return NULL;
     }
 
+    // Grab the xdg_runtime_dir for use in the socket path.
+    const char * xdg_runtime_dir = getenv("XDG_RUNTIME_DIR");
+    if (xdg_runtime_dir == NULL) {
+        fprintf(stderr, "Error: no XDG_RUNTIME_DIR. Make sure hyprland is running.\n");
+        return NULL;
+    }
 
     // Add the rest of the path to the hyprland_instance_signature.
-    int his_buffer_size = strlen(hyprland_instance_signature) + HIS_PATH_BUFFER_SIZE;
+    int his_buffer_size = strlen(xdg_runtime_dir) + strlen(hyprland_instance_signature)
+                          + HIS_PATH_BUFFER_SIZE;
 
     // Configure the socket path depending on the socket given.
     // SOCKET is for "socket" (handles requests); SOCKET2 is for "socket2", (handles events).
@@ -46,7 +53,7 @@ char * get_hyprland_socket(Socket socket_type) {
     // to get the full path to the socket.
     char socket_path[his_buffer_size];
     int chars_written = snprintf(socket_path, his_buffer_size, 
-        "/tmp/hypr/%s/.%s.sock", hyprland_instance_signature, socket_name_string);
+        "%s/hypr/%s/.%s.sock", xdg_runtime_dir, hyprland_instance_signature, socket_name_string);
     if (chars_written == -1) {
         perror("malloc");
         return NULL;
@@ -132,6 +139,6 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
 
     // Handle the closing of the socket and any dynamic memory associated with it to avoid errors.
     delete_socket_data_structure(socket_data);
-
+    
     return bufferjson; // It is up to the user to free the json buffer using cJSON_Delete().
 }
