@@ -57,8 +57,10 @@ Build requirements:
 4. Create a `defwidget` that uses that variable for `:reveal` or `:visible` as seen by the example code in `example/`.
 5. Implement the widget in a `defwindow`, like your eww bar for example.
 
-## !!!WARNING!!!
-This is alpha-quality software. Proper error handling still needs to be implemented so the program may segfault (when, for example, hyprland is not open).
+## !!! WARNING !!!
+
+This is alpha-quality software. Proper error handling still needs to be implemented.
+
 If you have trouble with this program, do not hesitate to report it in the issues section.
 
 ## Credits
