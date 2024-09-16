@@ -1,1 +1,3 @@
-bin/workspaces
+.cache
+bin
+compile_commands.json
