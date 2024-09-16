@@ -102,6 +102,33 @@ int set_up_hyprland_socket(Socket socket_type, SocketData * socket_data) {
     return 0;
 }
 
+// Looped version of recv that dynamically allocates a growing chunk of memory to store data
+// retrieved.
+char * recv_cat(int file_descriptor, size_t buffer_size, int flags) {
+    char * full_data = (char *) calloc(0, 0);
+    ssize_t signed_buffer_size = buffer_size;
+    ssize_t num_bytes_received = buffer_size;
+    int cur_buffer_size = 0;
+    
+    while (num_bytes_received == signed_buffer_size) {
+        char buffer[buffer_size];
+        
+        num_bytes_received = recv(file_descriptor, buffer, buffer_size, flags);
+        if (num_bytes_received == -1) {
+            perror("recv");
+            free(full_data);
+            return NULL;
+        }
+        buffer[num_bytes_received] = '\0';
+        cur_buffer_size += buffer_size;
+
+        full_data = realloc(full_data, cur_buffer_size);
+        strcat(full_data, buffer);
+    }
+
+    return full_data;
+}
+
 cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_data) {
     // Set up the hyprland socket so we can receive the information to be parsed from hyprland.
     if (set_up_hyprland_socket(SOCKET, socket_data) == -1) {
@@ -111,21 +138,13 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
 
     // Ask for data from the socket using the command given so we can choose what info we need.
     int socket_file_descriptor = socket_data->poll_descriptor->fd;
-    char * data_received = socket_data->data_received;
     if (send(socket_file_descriptor, command, strlen(command), 0) == -1) {
         perror("send");
         return NULL;
     }
 
-    // Receive data into a buffer so it can be read as string to be parsed by cJSON.
-    ssize_t num_bytes_received = recv(socket_file_descriptor, data_received, MAX_BUFFER_SIZE, 0);
-    if (num_bytes_received == -1) {
-        perror("recv");
-        return NULL;
-    }
-
-    // Null-terminate the string buffer so it is a valid string to be parsed by cJSON.
-    data_received[num_bytes_received] = '\0';
+    char * data_received = socket_data->data_received;
+    data_received = recv_cat(socket_file_descriptor, MAX_BUFFER_SIZE, 0);
 
     // Parse the data using cJSON as json so we can easily access different information.
     cJSON * bufferjson = cJSON_Parse(data_received);
@@ -142,3 +161,4 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
     
     return bufferjson; // It is up to the user to free the json buffer using cJSON_Delete().
 }
+
