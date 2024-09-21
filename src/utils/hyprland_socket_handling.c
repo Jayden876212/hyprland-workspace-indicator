@@ -116,9 +116,12 @@ char * recv_cat(int file_descriptor, size_t buffer_size, int flags) {
         num_bytes_received = recv(file_descriptor, buffer, buffer_size, flags);
         if (num_bytes_received == -1) {
             perror("recv");
-            free(full_data);
+            return NULL;
+        } else if (num_bytes_received == 0) {
+            fprintf(stderr, "Error: Connection closed by the server.\n");
             return NULL;
         }
+
         buffer[num_bytes_received] = '\0';
         cur_buffer_size += buffer_size;
 
@@ -145,6 +148,9 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
 
     char * data_received = socket_data->data_received;
     data_received = recv_cat(socket_file_descriptor, MAX_BUFFER_SIZE, 0);
+    if (data_received == NULL) {
+        fprintf(stderr, "Error: Failed to receive socket data into dynamic pool of memory.");
+    }
 
     // Parse the data using cJSON as json so we can easily access different information.
     cJSON * bufferjson = cJSON_Parse(data_received);
