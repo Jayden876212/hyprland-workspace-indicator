@@ -47,6 +47,13 @@ int create_workspace_array(HyprlandData * hyprland_data) {
             // specifically in our resulting JSON array later on (via the array position).
             cJSON * workspace_id_obj = cJSON_GetObjectItem(vth_workspace, "id");
             int workspace_id = workspace_id_obj->valueint;
+            if (workspace_id < 0) {
+                fprintf(stderr,
+                        "Workspace of ID %i is a negative integer. This means it is likely"
+                        " a special workspace. Support for these will be added soon.\n",
+                        workspace_id
+                );
+            }
 
             // The aforementioned verification of the ith monitor output name and the vth workspace
             // output name which checks if they match.
@@ -77,6 +84,13 @@ int create_activeworkspace_array(HyprlandData * hyprland_data) {
     char * active_monitor = active_monitor_obj->valuestring;
     cJSON * workspace_id_obj = cJSON_GetObjectItem(activeworkspace, "id");
     int workspace_id = workspace_id_obj->valueint;
+    if (workspace_id < 0) {
+        fprintf(stderr,
+                "Workspace of ID %i is a negative integer. This means it is likely"
+                " a special workspace. Support for these will be added soon.\n",
+                workspace_id
+        );
+    }
 
     // Loop through monitors.
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
