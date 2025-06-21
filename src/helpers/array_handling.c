@@ -4,7 +4,6 @@
 #include <string.h>
 
 // include/data
-#include "data/constants.h"
 #include "data/data_structures.h"
 
 // include/utils

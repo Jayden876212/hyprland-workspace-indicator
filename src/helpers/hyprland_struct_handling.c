@@ -18,8 +18,6 @@
 #include "data/data_structures.h"
 
 // include/helpers
-#include "helpers/array_handling.h"
-#include "helpers/json_handling.h"
 #include "helpers/hyprland_struct_handling.h"
 
 // include/utils

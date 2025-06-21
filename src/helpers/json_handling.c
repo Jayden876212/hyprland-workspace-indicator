@@ -1,7 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-
-#include <string.h>
 
 #include <cjson/cJSON.h>
 
@@ -15,7 +12,6 @@
 #include "helpers/hyprland_struct_handling.h"
 
 // include/utils
-#include "utils/hyprland_socket_handling.h"
 #include "utils/bit_handling.h"
 
 // Void function is used to reduce repeated code as both workspaces_array and activeworkspace_array
