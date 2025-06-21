@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.31.7)
+project(hyprland_workspace_indicator
+	VERSION 0.9
+	DESCRIPTION "A multi-monitor workspace indicator JSON output for use with EWW and Hyprland."
+	HOMEPAGE_URL "https://github.com/Jayden876212/hyprland_workspace_indicator"
+	LANGUAGES C
+)
+include_directories(include)
+find_package(cJSON REQUIRED)
+add_executable(workspaces
+	src/main.c
+	src/helpers/array_handling.c
+	src/helpers/json_handling.c
+	src/helpers/hyprland_struct_handling.c
+	src/utils/bit_handling.c
+	src/utils/event_handling.c
+	src/utils/hyprland_socket_handling.c
+)
+target_link_libraries(workspaces cjson)
+install(TARGETS workspaces)
