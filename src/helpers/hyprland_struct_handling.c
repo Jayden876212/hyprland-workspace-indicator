@@ -91,7 +91,7 @@ HyprlandData * initialise_hyprland_data_structure() {
         return NULL;
     }
 
-    // There is a chance that hyprland changes it's IPC or a severe error happens, so we warn the
+    // There is a chance that Hyprland changes it's IPC or a severe error happens, so we warn the
     // user that the program either needs updating or that I need to be aware of the bug.
     if (!cJSON_IsArray(hyprland_data->monitors)) {
         fprintf(stderr, "Error: Monitors not a valid JSON array. Update or report this issue.");
