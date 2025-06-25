@@ -7,7 +7,7 @@ project(hyprland-workspace-indicator
 )
 include_directories(include)
 find_package(cJSON REQUIRED)
-add_executable(workspaces
+add_executable(hyprland-workspaces
 	src/main.c
 	src/helpers/array_handling.c
 	src/helpers/json_handling.c
@@ -16,5 +16,5 @@ add_executable(workspaces
 	src/utils/event_handling.c
 	src/utils/hyprland_socket_handling.c
 )
-target_link_libraries(workspaces cjson)
-install(TARGETS workspaces)
+target_link_libraries(hyprland-workspaces cjson)
+install(TARGETS hyprland-workspaces)
