@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.31.7)
-project(hyprland_workspace_indicator
+project(hyprland-workspace-indicator
 	VERSION 0.9
 	DESCRIPTION "A multi-monitor workspace indicator JSON output for use with EWW and Hyprland."
-	HOMEPAGE_URL "https://github.com/Jayden876212/hyprland_workspace_indicator"
+	HOMEPAGE_URL "https://github.com/Jayden876212/hyprland-workspace-indicator"
 	LANGUAGES C
 )
 include_directories(include)
