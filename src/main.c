@@ -18,7 +18,7 @@
 #include "utils/event_handling.h"
 #include "utils/hyprland_socket_handling.h"
 
-// Initialise global variable so it can be cleaned up with sig_int_handler.
+// Initialise global variable so it can be cleaned up with a signal handler.
 SocketData *events_data_global = NULL;
 // The use of a global variable might seem like a strange choice here, but this is because
 // signal handlers don't accept any other arguments other than the signum. We set the global
