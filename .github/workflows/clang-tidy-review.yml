@@ -4,10 +4,6 @@ name: clang-tidy-review
 on:
   pull_request:
     branches: ["main", "develop"]
-    permissions:
-      issues: write
-      pull-requests: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
