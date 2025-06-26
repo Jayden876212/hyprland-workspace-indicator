@@ -2,8 +2,8 @@
 
 #include <sys/socket.h>
 
-#include <string.h>
 #include <poll.h>
+#include <string.h>
 
 // include/data
 #include "data/constants.h"
@@ -11,8 +11,8 @@
 
 #include "utils/hyprland_socket_handling.h"
 
-int poll_for_socket_events(SocketData * events_data, int (*event_processor)(),
-int (*function_executed)()) {
+int poll_for_socket_events(SocketData *events_data, int (*event_processor)(),
+                           int (*function_executed)()) {
     // Poll the server for events that we can check for.
     if (poll(events_data->poll_descriptor, 1, -1) == -1) {
         perror("poll");
@@ -22,7 +22,7 @@ int (*function_executed)()) {
     // Check if the server has data ready to be read by comparing the constant POLLIN using AND.
     if (events_data->poll_descriptor->revents & POLLIN) {
         // Initialise pointers to simplify the reading of the code.
-        int * file_descriptor = &(events_data->poll_descriptor->fd);
+        int *file_descriptor = &(events_data->poll_descriptor->fd);
 
         // Receive data from the server.
         events_data->data_received = recv_cat(*file_descriptor, MAX_BUFFER_SIZE, 0);
@@ -43,9 +43,9 @@ int (*function_executed)()) {
     return 0;
 }
 
-int handle_workspace_socket_events(SocketData * events_data, int (*function_executed)()) {
+int handle_workspace_socket_events(SocketData *events_data, int (*function_executed)()) {
     // Initialise pointer for better readability.
-    char * data_received = events_data->data_received;
+    char *data_received = events_data->data_received;
 
     // Check if the user switches workspace or monitor so we can respond to it with the
     // user-specified function.

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <unistd.h>
 #include <signal.h>
+#include <unistd.h>
 
 #include <cjson/cJSON.h>
 
@@ -11,15 +11,15 @@
 #include "data/data_structures.h"
 
 // include/helpers
-#include "helpers/json_handling.h"
 #include "helpers/hyprland_struct_handling.h"
+#include "helpers/json_handling.h"
 
 // include/utils
-#include "utils/hyprland_socket_handling.h"
 #include "utils/event_handling.h"
+#include "utils/hyprland_socket_handling.h"
 
 // Initialise global variable so it can be cleaned up with sig_int_handler.
-SocketData * events_data_global = NULL;
+SocketData *events_data_global = NULL;
 // The use of a global variable might seem like a strange choice here, but this is because
 // signal handlers don't accept any other arguments other than the signum. We set the global
 // variable to point to a local variable which is passed amongst multiple functions in
@@ -43,7 +43,7 @@ int main() {
     // only when it's needed. This will reduce performance overhead as we won't be constantly
     // printing the workspace information in a loop, rather we will be checking for when the
     // information actually changes.
-    SocketData * events_data = initialise_socket_data_structure();
+    SocketData *events_data = initialise_socket_data_structure();
     if (events_data == NULL) {
         fprintf(stderr, "Error: Failed to allocate socket data structure. Exiting.\n");
         exit(EXIT_FAILURE); // We exit the program because without a connection to a socket, it is
@@ -65,14 +65,14 @@ int main() {
     // are outputted.
     // The function event_handler processes events so we can check when the user interacts with the
     // compositor.
-    int (*event_handler)(SocketData *,int (*)()) = handle_workspace_socket_events;
+    int (*event_handler)(SocketData *, int (*)()) = handle_workspace_socket_events;
     // The function function_executed is to decide what action to take upon the event_handler's
     // condition having success (e.g. when the workspace is changed or when the monitor is
     // focused.)
     // We use the function initialise_and_print_workspace_info_as_json because that is the purpose
     // of the program.
     int (*function_executed)() = initialise_and_print_workspace_info_as_json;
-    
+
     while (1) {
         // Poll for when the user interacts with the compositor. In this case, it checks for when
         // the focused workspace or monitor is changed, which will reduce overhead as mentioned
