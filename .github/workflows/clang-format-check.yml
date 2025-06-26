@@ -1,10 +1,10 @@
-name: clang-format Check
+name: clang-format-check
 on:
   pull_request:
     branches: [ "main", "develop" ]
 jobs:
-  formatting-check:
-    name: Formatting Check
+  clang-format-check:
+    name: clang-format-check
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
