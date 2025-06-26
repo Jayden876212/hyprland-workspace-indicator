@@ -4,8 +4,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <sys/un.h>
 
 #include <cjson/cJSON.h>
@@ -17,28 +17,28 @@
 // include/helpers
 #include "helpers/hyprland_struct_handling.h"
 
-char * get_hyprland_socket(Socket socket_type) { 
+char *get_hyprland_socket(Socket socket_type) {
     // Grab the hyprland_instance_signature for use in the socket path.
-    const char * hyprland_instance_signature = getenv("HYPRLAND_INSTANCE_SIGNATURE");
+    const char *hyprland_instance_signature = getenv("HYPRLAND_INSTANCE_SIGNATURE");
     if (hyprland_instance_signature == NULL) {
         fprintf(stderr, "Error: no HYPRLAND_INSTANCE_SIGNATURE. Make sure hyprland is running.\n");
         return NULL;
     }
 
     // Grab the xdg_runtime_dir for use in the socket path.
-    const char * xdg_runtime_dir = getenv("XDG_RUNTIME_DIR");
+    const char *xdg_runtime_dir = getenv("XDG_RUNTIME_DIR");
     if (xdg_runtime_dir == NULL) {
         fprintf(stderr, "Error: no XDG_RUNTIME_DIR. Make sure hyprland is running.\n");
         return NULL;
     }
 
     // Add the rest of the path to the hyprland_instance_signature.
-    int his_buffer_size = strlen(xdg_runtime_dir) + strlen(hyprland_instance_signature)
-                          + HIS_PATH_BUFFER_SIZE;
+    int his_buffer_size =
+        strlen(xdg_runtime_dir) + strlen(hyprland_instance_signature) + HIS_PATH_BUFFER_SIZE;
 
     // Configure the socket path depending on the socket given.
     // SOCKET is for "socket" (handles requests); SOCKET2 is for "socket2", (handles events).
-    char * socket_name_string;
+    char *socket_name_string;
     if (socket_type == SOCKET) {
         socket_name_string = "socket";
     } else if (socket_type == SOCKET2) {
@@ -49,18 +49,18 @@ char * get_hyprland_socket(Socket socket_type) {
         return NULL;
     }
 
-    // Concatenate the hyprland_instance_signature, socket_name and the rest of the path 
+    // Concatenate the hyprland_instance_signature, socket_name and the rest of the path
     // to get the full path to the socket.
     char socket_path[his_buffer_size];
-    int chars_written = snprintf(socket_path, his_buffer_size, 
-        "%s/hypr/%s/.%s.sock", xdg_runtime_dir, hyprland_instance_signature, socket_name_string);
+    int chars_written = snprintf(socket_path, his_buffer_size, "%s/hypr/%s/.%s.sock",
+                                 xdg_runtime_dir, hyprland_instance_signature, socket_name_string);
     if (chars_written == -1) {
         perror("malloc");
         return NULL;
     }
 
     // Dynamically allocate a duplicate of the string for use outside of the function.
-    char * socket_path_duplicate = strdup(socket_path);
+    char *socket_path_duplicate = strdup(socket_path);
     if (socket_path_duplicate == NULL) {
         perror("strdup");
         free(socket_path_duplicate);
@@ -70,9 +70,9 @@ char * get_hyprland_socket(Socket socket_type) {
     return socket_path_duplicate; // It is the function user's job to free() the string.
 }
 
-int set_up_hyprland_socket(Socket socket_type, SocketData * socket_data) {
+int set_up_hyprland_socket(Socket socket_type, SocketData *socket_data) {
     // Grab the path of the hyprland socket to communicate with it.
-    char * socket_path = get_hyprland_socket(socket_type);
+    char *socket_path = get_hyprland_socket(socket_type);
     if (socket_path == NULL) {
         fprintf(stderr, "Error: Failed to obtain hyprland socket path.\n");
         free(socket_path);
@@ -94,7 +94,7 @@ int set_up_hyprland_socket(Socket socket_type, SocketData * socket_data) {
     address.sun_family = AF_UNIX;
     strncpy(address.sun_path, socket_path, sizeof(address.sun_path) - 1);
     free(socket_path);
-    if (connect(socket_file_descriptor, (struct sockaddr*)&address, sizeof(address)) == -1) {
+    if (connect(socket_file_descriptor, (struct sockaddr *)&address, sizeof(address)) == -1) {
         perror("connect");
         return -1;
     }
@@ -104,15 +104,15 @@ int set_up_hyprland_socket(Socket socket_type, SocketData * socket_data) {
 
 // Looped version of recv that dynamically allocates a growing chunk of memory to store data
 // retrieved.
-char * recv_cat(int file_descriptor, size_t buffer_size, int flags) {
-    char * full_data = (char *) calloc(0, 0);
+char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
+    char *full_data = (char *)calloc(0, 0);
     ssize_t signed_buffer_size = buffer_size;
     ssize_t num_bytes_received = buffer_size;
     int cur_buffer_size = 0;
-    
+
     while (num_bytes_received == signed_buffer_size) {
         char buffer[buffer_size];
-        
+
         num_bytes_received = recv(file_descriptor, buffer, buffer_size, flags);
         if (num_bytes_received == -1) {
             perror("recv");
@@ -132,7 +132,7 @@ char * recv_cat(int file_descriptor, size_t buffer_size, int flags) {
     return full_data;
 }
 
-cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_data) {
+cJSON *grab_json_from_socket_data(const char *command, SocketData *socket_data) {
     // Set up the hyprland socket so we can receive the information to be parsed from hyprland.
     if (set_up_hyprland_socket(SOCKET, socket_data) == -1) {
         fprintf(stderr, "Error: Failed to set up hyprland socket\n");
@@ -146,16 +146,16 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
         return NULL;
     }
 
-    char * data_received = socket_data->data_received;
+    char *data_received = socket_data->data_received;
     data_received = recv_cat(socket_file_descriptor, MAX_BUFFER_SIZE, 0);
     if (data_received == NULL) {
         fprintf(stderr, "Error: Failed to receive socket data into dynamic pool of memory.");
     }
 
     // Parse the data using cJSON as json so we can easily access different information.
-    cJSON * bufferjson = cJSON_Parse(data_received);
+    cJSON *bufferjson = cJSON_Parse(data_received);
     if (bufferjson == NULL) {
-        const char * error_ptr = cJSON_GetErrorPtr();
+        const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL) {
             fprintf(stderr, "JSON parsing error at : %s\n", error_ptr);
         }
@@ -164,7 +164,6 @@ cJSON * grab_json_from_socket_data(const char * command, SocketData * socket_dat
 
     // Handle the closing of the socket and any dynamic memory associated with it to avoid errors.
     delete_socket_data_structure(socket_data);
-    
+
     return bufferjson; // It is up to the user to free the json buffer using cJSON_Delete().
 }
-

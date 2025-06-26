@@ -8,8 +8,8 @@
 
 // include/helpers
 #include "helpers/array_handling.h"
-#include "helpers/json_handling.h"
 #include "helpers/hyprland_struct_handling.h"
+#include "helpers/json_handling.h"
 
 // include/utils
 #include "utils/bit_handling.h"
@@ -34,7 +34,7 @@ void print_array_json_formatted(uint16_t bit_array) {
 
 // We are using a function to print json manually rather than using cJSON_Print because this will
 // create unnecessary complexity with the cJSON object. This should result in better performance.
-int print_workspaces_json_array(HyprlandData * hyprland_data) {
+int print_workspaces_json_array(HyprlandData *hyprland_data) {
     printf("["); // Open the json.
     for (int i = 0; i < hyprland_data->monitors_length; ++i) {
         printf("{\"workspaces\":[");
@@ -45,9 +45,8 @@ int print_workspaces_json_array(HyprlandData * hyprland_data) {
         printf("]}");
         if (i != hyprland_data->monitors_length - 1)
             printf(",");
-        
     }
-    printf("]\n"); // Close the json.
+    printf("]\n");  // Close the json.
     fflush(stdout); // We flush stdout because we want the workspace data to be immediately sent to
                     // the receiving program. This will prevent undefined behaviour resulting from a
                     // buffered output.
@@ -58,7 +57,7 @@ int print_workspaces_json_array(HyprlandData * hyprland_data) {
 // The data that we need about hyprland is pulled using a data structure that is passed to multiple
 // functions.
 int initialise_and_print_workspace_info_as_json() {
-    HyprlandData * hyprland_data = initialise_hyprland_data_structure();
+    HyprlandData *hyprland_data = initialise_hyprland_data_structure();
 
     create_workspace_array(hyprland_data);
     create_activeworkspace_array(hyprland_data);

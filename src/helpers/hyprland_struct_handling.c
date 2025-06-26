@@ -1,16 +1,16 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <string.h>
 
-#include <unistd.h>
-#include <poll.h>
 #include <errno.h>
+#include <poll.h>
+#include <unistd.h>
 
 #include <cjson/cJSON.h>
 
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <sys/un.h>
 
 // include/data
@@ -23,16 +23,16 @@
 // include/utils
 #include "utils/hyprland_socket_handling.h"
 
-cJSON * allocate_and_grab_json(const char * cmd) { // This function exists to reduce repeated code.
+cJSON *allocate_and_grab_json(const char *cmd) { // This function exists to reduce repeated code.
     // Initialise the socket data structure so it can be used to receive the json data.
-    SocketData * socket_data = initialise_socket_data_structure();
+    SocketData *socket_data = initialise_socket_data_structure();
     if (socket_data == NULL) {
         fprintf(stderr, "Error: Failed to allocate socket data structure.\n");
         return NULL;
     }
 
     // Grab the json so we can add it to our HyprlandData structure.
-    cJSON * output_json = grab_json_from_socket_data(cmd, socket_data);
+    cJSON *output_json = grab_json_from_socket_data(cmd, socket_data);
     if (output_json == NULL) {
         fprintf(stderr, "Error: Failed to grab JSON from socket data.\n");
         return NULL;
@@ -41,42 +41,42 @@ cJSON * allocate_and_grab_json(const char * cmd) { // This function exists to re
     return output_json;
 }
 
-int grab_hyprland_indicator_data_json(HyprlandData * hyprland_data) {
+int grab_hyprland_indicator_data_json(HyprlandData *hyprland_data) {
     // Grab all the necessary data to determine the final array to be used in our workspace
     // indicator.
-    cJSON * monitors = allocate_and_grab_json(CMD_MONITORS);
+    cJSON *monitors = allocate_and_grab_json(CMD_MONITORS);
     if (monitors == NULL) {
         return -1; // We don't need an error message because the allocate_and_grab_json already
                    // returns the necessary error messages.
     }
     hyprland_data->monitors = monitors;
 
-    cJSON * workspaces = allocate_and_grab_json(CMD_WORKSPACES);
+    cJSON *workspaces = allocate_and_grab_json(CMD_WORKSPACES);
     if (workspaces == NULL) {
         cJSON_Delete(monitors);
         return -1;
     }
     hyprland_data->workspaces = workspaces;
 
-    cJSON * activeworkspace = allocate_and_grab_json(CMD_ACTIVEWORKSPACE);
+    cJSON *activeworkspace = allocate_and_grab_json(CMD_ACTIVEWORKSPACE);
     if (activeworkspace == NULL) {
         cJSON_Delete(monitors);
         cJSON_Delete(workspaces);
         return -1;
     }
     hyprland_data->activeworkspace = activeworkspace;
-    
+
     return 0;
 }
 
-HyprlandData * initialise_hyprland_data_structure() {
+HyprlandData *initialise_hyprland_data_structure() {
     // We are allocating data for a struct because we can pass this through many different
     // functions as an argument. This will reduce the amount of arguments we have to pass, reducing
     // code width and repeated code in our coupling. All the code for managing the data for our
     // indicator to work is abstracted into this data structure, where the functions are coupled
     // together using the HyprlandData struct.
-    HyprlandData * hyprland_data;
-    hyprland_data = (HyprlandData*)malloc(sizeof(HyprlandData));
+    HyprlandData *hyprland_data;
+    hyprland_data = (HyprlandData *)malloc(sizeof(HyprlandData));
     if (hyprland_data == NULL) {
         perror("malloc");
         return NULL;
@@ -109,7 +109,7 @@ HyprlandData * initialise_hyprland_data_structure() {
 
     // These are our arrays where we will store our processed data. These will be printed to json
     // format later. See bit_handling.c for an explanation as to why we use a 16-bit integer.
-    uint16_t * workspace_array;
+    uint16_t *workspace_array;
     workspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
     if (workspace_array == NULL) {
         perror("malloc");
@@ -118,7 +118,7 @@ HyprlandData * initialise_hyprland_data_structure() {
     }
     hyprland_data->workspace_array = workspace_array;
 
-    uint16_t * activeworkspace_array;
+    uint16_t *activeworkspace_array;
     activeworkspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
     if (activeworkspace_array == NULL) {
         perror("malloc");
@@ -131,7 +131,7 @@ HyprlandData * initialise_hyprland_data_structure() {
     return hyprland_data;
 }
 
-void delete_hyprland_data_structure(HyprlandData * hyprland_data) {
+void delete_hyprland_data_structure(HyprlandData *hyprland_data) {
     // This function provides an easy way to free all the memory in our data structure.
     cJSON_Delete(hyprland_data->monitors);
     hyprland_data->monitors = NULL;
@@ -147,23 +147,23 @@ void delete_hyprland_data_structure(HyprlandData * hyprland_data) {
     hyprland_data = NULL;
 }
 
-SocketData * initialise_socket_data_structure() {
+SocketData *initialise_socket_data_structure() {
     // Dynamically allocate our memory and error handle it in case the program does not have enough
     // available memory.
-    SocketData * socket_data = (SocketData*)malloc(sizeof(SocketData));
+    SocketData *socket_data = (SocketData *)malloc(sizeof(SocketData));
     if (socket_data == NULL) {
         perror("malloc");
         return NULL;
     }
 
-    socket_data->data_received = (char*)malloc(MAX_BUFFER_SIZE + 1);
+    socket_data->data_received = (char *)malloc(MAX_BUFFER_SIZE + 1);
     if (socket_data->data_received == NULL) {
         free(socket_data);
         perror("malloc");
         return NULL;
     }
 
-    socket_data->poll_descriptor = (struct pollfd*)malloc(sizeof(struct pollfd));
+    socket_data->poll_descriptor = (struct pollfd *)malloc(sizeof(struct pollfd));
     if (socket_data->poll_descriptor == NULL) {
         free(socket_data->data_received);
         free(socket_data);
@@ -176,7 +176,7 @@ SocketData * initialise_socket_data_structure() {
     return socket_data;
 }
 
-void delete_socket_data_structure(SocketData * socket_data) {
+void delete_socket_data_structure(SocketData *socket_data) {
     // This function provides an easy way to free all the memory in our data structure.
 
     // The OS might not be able to close the socket so we warn the user of this.
