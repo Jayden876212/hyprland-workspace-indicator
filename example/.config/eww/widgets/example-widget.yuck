@@ -1,15 +1,13 @@
-(deflisten workspaces 'workspaces.sh')
-
 (defwidget workspaceicon [monitor workspace]
   (revealer :reveal "${workspaces[monitor].workspaces[workspace]}" :transition "slideright" :duration "500ms"
     (overlay :visible "${workspaces[monitor].workspaces[workspace]}"
-      (box :class "${workspaces[monitor].workspaces[workspace] ? "inactive-circle-colour-margin" : "inactive-circle-colour"}"
+      (box :class "${workspaces[monitor].workspaces[workspace] ? "inactive-circle-indicator-margin" : "inactive-circle-indicator"}"
            :width 40 
            :spacing 0
         (label :text "${workspace}"))
       (revealer :reveal "${workspaces[monitor].activeworkspaces[workspace]}"
                 :transition "crossfade"
-        (box :width 40 :spacing 0 :class "${workspaces[monitor].workspaces[workspace] ? "active-circle-colour-margin" : "active-circle-colour"}"
+        (box :width 40 :spacing 0 :class "${workspaces[monitor].workspaces[workspace] ? "active-circle-indicator-margin" : "active-circle-indicator"}"
           (label :text "${workspace}"))))))
 
 (defwidget workspaceindicator [monitor]
