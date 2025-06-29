@@ -1,20 +1,20 @@
-# hyprland_workspace_indicator
+# `hyprland-workspace-indicator`
 
 ## What is it?
 
-A multi-monitor workspace indicator JSON output for use with EWW and Hyprland.
-It is super lightweight and written in C. It supports up to 10 workspaces [1,2,3,4,5,6,7,8,9,0].
+![Animated demonstration](docs/demonstration.gif)
+
+A multi-monitor workspace indicator for [Hyprland](https://github.com/hyprwm/Hyprland) that can be integrated with [EWW](https://github.com/elkowar/eww) to display available workspaces.
+
+It is super lightweight and written in the C programming language. It supports up to 10 workspaces [1,2,3,4,5,6,7,8,9,0] (although more are planned in the future).
 
 The key feature is the ability to see individual workspaces on each monitor respectively, reducing clutter and increasing readability. For example, you might see one numbered workspace (4) on one monitor, and 3 other numbered workspaces (7,8, and 9) on another monitor.
 
-![Animated demonstration](docs/demonstration.gif)
-
-
-## What do you need to know?
+## Integrating with the compositor (Hyprland)
 
 The program will not work with any wayland compositors that aren't Hyprland. The program produces a JSON output for each monitor like this:
 
-```json
+```JSON
 [
   {
     "activeworkspaces": [
@@ -45,6 +45,10 @@ The program will not work with any wayland compositors that aren't Hyprland. The
 ]
 ```
 
+For each monitor, this JSON data is stored in an array as each index, where the index is the monitor ID assigned to by your Hyprland configuration.
+
+The data is outputted automatically when a workspace-related event is triggered.
+
 ## How to build and install (eww)
 
 Build requirements:
@@ -67,5 +71,3 @@ If you have trouble with this program, do not hesitate to report it in the issue
 
 I would like to thank the developers of these wonderful projects:
 * https://github.com/DaveGamble/cJSON
-* https://github.com/hyprwm/Hyprland
-* https://github.com/elkowar/eww
