@@ -49,6 +49,84 @@ For each monitor, this JSON data is stored in an array as each index, where the 
 
 The data is outputted automatically when a workspace-related event is triggered.
 
+You can look at the [following section](README.md#running-with-an-example-widget) for an example of how to implement the `hyprland-workspace-indicator`.
+
+## Running with an example widget
+
+The example widget, script, and other configuration files are located in [`example/.config/eww`](example) to show you what an implementation would look like.
+
+When `hyprland-workspaces` is installed to your `$PATH`, EWW should be able to execute it in a script:
+
+`.config/eww/scripts/workspaces.sh`
+
+```sh
+#! /bin/sh
+
+hyprland-workspaces
+```
+
+EWW should import this script as a listener:
+
+`.config/eww/variables.yuck`
+
+```yuck
+(deflisten workspaces 'scripts/workspaces.sh')
+```
+
+A working widget to implement this script looks something like this:
+
+`.config/eww/widgets/example-widget.yuck`
+
+```yuck
+(defwidget workspaceicon [monitor workspace]
+  (revealer :reveal "${workspaces[monitor].workspaces[workspace]}" :transition "slideright" :duration "500ms"
+    (overlay :visible "${workspaces[monitor].workspaces[workspace]}"
+      (box :class "${workspaces[monitor].workspaces[workspace] ? "inactive-circle-indicator-margin" : "inactive-circle-indicator"}"
+           :width 40 
+           :spacing 0
+        (label :text "${workspace}"))
+      (revealer :reveal "${workspaces[monitor].activeworkspaces[workspace]}"
+                :transition "crossfade"
+        (box :width 40 :spacing 0 :class "${workspaces[monitor].workspaces[workspace] ? "active-circle-indicator-margin" : "active-circle-indicator"}"
+          (label :text "${workspace}"))))))
+
+(defwidget workspaceindicator [monitor]
+  (box :class "container"
+       :halign "start"
+       :width 20
+       :space-evenly "false"
+       :spacing 0
+       :orientation "h"
+    (for workspace in "[1,2,3,4,5,6,7,8,9,0]"
+      (workspaceicon :monitor monitor
+                     :workspace workspace))))
+```
+
+The widget is then placed in a window:
+
+`.config/eww/windows/example-window.yuck`
+
+```yuck
+(include "./widgets/example-widget.yuck")
+
+(defwindow example-window
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "10px"
+                               :width "99%"
+                               :height "30px"
+                               :anchor "top center")
+           :stacking "fg"
+           :exclusive true
+           :reserve (struts :distance "40px" :side "top")
+           :windowtype "dock"
+           :wm-ignore false
+  (box 
+    (workspaceindicator :monitor 0)
+  )
+)
+```
+
 ## How to build and install (eww)
 
 Build requirements:
