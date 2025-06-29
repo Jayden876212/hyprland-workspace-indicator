@@ -7,7 +7,7 @@ It is super lightweight and written in C. It supports up to 10 workspaces [1,2,3
 
 The key feature is the ability to see individual workspaces on each monitor respectively, reducing clutter and increasing readability. For example, you might see one numbered workspace (4) on one monitor, and 3 other numbered workspaces (7,8, and 9) on another monitor.
 
-![image](https://github.com/tdljayden/hyprland_workspace_indicator/assets/110114652/79235f6d-4109-4051-822a-c5f43aed35be)
+![Animated demonstration](docs/demonstration.gif)
 
 
 ## What do you need to know?
