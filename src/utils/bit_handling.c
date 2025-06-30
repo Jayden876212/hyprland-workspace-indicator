@@ -1,13 +1,15 @@
-#include <stdio.h>
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+
+#include "data/constants.h"
 
 // At first, bit manipulation might seem like a strange technique to create an array. After all it
-// does not use traditional notation for an array, making the code more verbose and less readable. 
-// However, each boolean value in C uses a byte (8 bits) therefore a person with for example 3 
-// monitors would have a 2D array which uses a total of 3 (amount of monitors) * 10 (amount of 
-// workspaces) * 8 (amount of bits in a boolean value), which equals 240 bytes. However, the same 
-// person using a 1D integer array (a 2D bit array) would be using 3 (amount of monitors) * 16 
+// does not use traditional notation for an array, making the code more verbose and less readable.
+// However, each boolean value in C uses a byte (8 bits) therefore a person with for example 3
+// monitors would have a 2D array which uses a total of 3 (amount of monitors) * 10 (amount of
+// workspaces) * 8 (amount of bits in a boolean value), which equals 240 bytes. However, the same
+// person using a 1D integer array (a 2D bit array) would be using 3 (amount of monitors) * 16
 // (amount of bits in a 16-bit integer) which equals 48 bits.
 
 int print_binary(uint16_t integer) { // This is a test function for debugging only.
@@ -49,7 +51,7 @@ bool access_bit_array(uint16_t bit_array, unsigned int position) {
     }
 
     // Take away 15 from the more human-readable position given by the function user.
-    int true_position = 15 - position; 
+    int true_position = TRUE_BIT_POSITION_OFFSET - position;
 
     // Isolate the bit at a given position so it is on the right hand side of the bit array.
     bit_array >>= true_position;

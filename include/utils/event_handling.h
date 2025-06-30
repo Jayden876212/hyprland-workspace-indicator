@@ -3,9 +3,11 @@
 #ifndef EVENT_HANDLING_H
 #define EVENT_HANDLING_H
 
-int poll_for_socket_events(SocketData * events_data, int (*event_processor)(), 
-int (*function_executed)());
+#include "data/data_structures.h"
 
-int handle_workspace_socket_events(SocketData * events_data, int (*function_executed)());
+int poll_for_socket_events(SocketData *events_data, Callback event_processor,
+                           Callback function_executed);
+
+int handle_workspace_socket_events(SocketData *events_data, Callback function_executed);
 
 #endif
