@@ -9,7 +9,7 @@
 
 #include <poll.h>
 
-typedef struct {
+typedef struct HyprlandData {
     cJSON *monitors;
     cJSON *workspaces;
     cJSON *activeworkspace;
@@ -23,7 +23,7 @@ typedef struct {
 
 struct pollfd;
 
-typedef struct {
+typedef struct SocketData {
     char *data_received;
     struct pollfd *poll_descriptor;
 } SocketData;

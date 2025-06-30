@@ -130,8 +130,9 @@ HyprlandData *initialise_hyprland_data_structure() {
     return hyprland_data;
 }
 
+// No linting because this is a helper function to free all related resources
+// NOLINTNEXTLINE(readability-non-const-parameter)
 void delete_hyprland_data_structure(HyprlandData *hyprland_data) {
-    // This function provides an easy way to free all the memory in our data structure.
     cJSON_Delete(hyprland_data->monitors);
     hyprland_data->monitors = NULL;
     cJSON_Delete(hyprland_data->activeworkspace);
@@ -175,9 +176,9 @@ SocketData *initialise_socket_data_structure() {
     return socket_data;
 }
 
+// No linting because this is a helper function to free all related resources
+// NOLINTNEXTLINE(readability-non-const-parameter)
 void delete_socket_data_structure(SocketData *socket_data) {
-    // This function provides an easy way to free all the memory in our data structure.
-
     // The OS might not be able to close the socket so we warn the user of this.
     int close_result = close(socket_data->poll_descriptor->fd);
     if (close_result == -1) {
