@@ -3,7 +3,7 @@
 ## What is it?
 
 A multi-monitor workspace indicator JSON output for use with EWW and Hyprland.
-It is super lightweight and written in C. It supports up to 10 workspaces [1,2,3,4,5,6,7,8,9,0].
+It is super lightweight and written in C. Supports up to 10 workspaces [1,2,3,4,5,6,7,8,9,0].
 
 The key feature is the ability to see individual workspaces on each monitor respectively, reducing clutter and increasing readability. For example, you might see one numbered workspace (4) on one monitor, and 3 other numbered workspaces (7,8, and 9) on another monitor.
 
