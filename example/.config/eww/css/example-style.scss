@@ -4,6 +4,14 @@
 	border-width: 2px;
 }
 
+@mixin text {
+        //font-family: "jetbrains mono nerd font";
+        font-family: "urw gothic";
+	font-weight: 900;
+	color: rgba(255, 255, 255, 1);
+}
+
+
 $border-radius-circle: 50%;
 $inactive-circle-colour: #2e3440;
 $active-circle-colour: #81a1c1;
@@ -33,3 +41,11 @@ $active-circle-colour: #81a1c1;
 	background-color: rgba($active-circle-colour, 1);
 	margin-right: 10px;
 }
+
+.container {
+	background-color: rgba(46, 52, 64, 0);
+	border-radius: 10px 10px 10px 10px;
+	@include text;
+	color: rgba(255, 255, 255, 1);
+}
+
