@@ -29,7 +29,8 @@ int create_workspace_array(HyprlandData *hyprland_data) {
             return -1;
         }
         cJSON *monitor_name_obj = cJSON_GetObjectItem(ith_monitor, "name");
-        char *monitor_name = monitor_name_obj->valuestring;
+        char *monitor_name = NULL;
+        monitor_name = monitor_name_obj->valuestring;
 
         // Loop through the used workspaces.
         for (int v = 0; v < hyprland_data->workspaces_length; ++v) {
@@ -43,7 +44,8 @@ int create_workspace_array(HyprlandData *hyprland_data) {
             // though. This can be used to reduce screen clutter and improve readability on each
             // monitor by only showing the used workspaces on THAT specific monitor.
             cJSON *active_monitor_obj = cJSON_GetObjectItem(vth_workspace, "monitor");
-            char *active_monitor = active_monitor_obj->valuestring;
+            char *active_monitor = NULL;
+            active_monitor = active_monitor_obj->valuestring;
 
             // Grab the ID of the workspace that the user can see what ID the workspace is
             // specifically in our resulting JSON array later on (via the array position).
@@ -82,7 +84,8 @@ int create_activeworkspace_array(HyprlandData *hyprland_data) {
     // Perform steps needed to get the monitor output name (for comparison) and the id of the
     // workspace ID to show the user using an array (ID is position in the array).
     cJSON *active_monitor_obj = cJSON_GetObjectItem(activeworkspace, "monitor");
-    char *active_monitor = active_monitor_obj->valuestring;
+    char *active_monitor = NULL;
+    active_monitor = active_monitor_obj->valuestring;
     cJSON *workspace_id_obj = cJSON_GetObjectItem(activeworkspace, "id");
     int workspace_id = workspace_id_obj->valueint;
     if (workspace_id < 0) {
@@ -99,7 +102,8 @@ int create_activeworkspace_array(HyprlandData *hyprland_data) {
         // Parse the JSON to grab the monitor name.
         cJSON *ith_monitor = cJSON_GetArrayItem(hyprland_data->monitors, i);
         cJSON *monitor_name_obj = cJSON_GetObjectItem(ith_monitor, "name");
-        char *monitor_name = monitor_name_obj->valuestring;
+        char *monitor_name = NULL;
+        monitor_name = monitor_name_obj->valuestring;
 
         // See previous comments on the other function
         if (strcmp(active_monitor, monitor_name) == 0) {

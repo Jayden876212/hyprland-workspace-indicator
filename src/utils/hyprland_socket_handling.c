@@ -41,12 +41,13 @@ char *get_hyprland_socket(Socket socket_type) {
     }
 
     // Add the rest of the path to the hyprland_instance_signature.
-    int his_buffer_size =
+    int his_buffer_size = 0;
+    his_buffer_size =
         strlen(xdg_runtime_dir) + strlen(hyprland_instance_signature) + (unsigned long) HIS_PATH_BUFFER_SIZE;
 
     // Configure the socket path depending on the socket given.
     // SOCKET is for "socket" (handles requests); SOCKET2 is for "socket2", (handles events).
-    char *socket_name_string;
+    char *socket_name_string = NULL;
     if (socket_type == SOCKET) {
         socket_name_string = "socket";
     } else if (socket_type == SOCKET2) {

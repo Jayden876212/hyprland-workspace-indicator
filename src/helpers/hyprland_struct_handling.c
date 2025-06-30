@@ -110,7 +110,7 @@ HyprlandData *initialise_hyprland_data_structure() {
 
     // These are our arrays where we will store our processed data. These will be printed to json
     // format later. See bit_handling.c for an explanation as to why we use a 16-bit integer.
-    uint16_t *workspace_array;
+    uint16_t *workspace_array = NULL;
     workspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
     if (workspace_array == NULL) {
         perror("malloc");
@@ -119,7 +119,7 @@ HyprlandData *initialise_hyprland_data_structure() {
     }
     hyprland_data->workspace_array = workspace_array;
 
-    uint16_t *activeworkspace_array;
+    uint16_t *activeworkspace_array = NULL;
     activeworkspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
     if (activeworkspace_array == NULL) {
         perror("malloc");
