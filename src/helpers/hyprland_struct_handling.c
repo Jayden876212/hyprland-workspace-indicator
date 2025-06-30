@@ -10,8 +10,6 @@
 #include <cjson/cJSON.h>
 
 #include <sys/socket.h>
-#include <sys/types.h>
-#include <sys/un.h>
 
 // include/data
 #include "data/constants.h"
