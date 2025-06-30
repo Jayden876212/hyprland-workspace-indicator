@@ -113,7 +113,7 @@ int set_up_hyprland_socket(Socket socket_type, SocketData *socket_data) {
 // Looped version of recv that dynamically allocates a growing chunk of memory to store data
 // retrieved.
 char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
-    char *full_data = (char *)calloc(0, 0);
+    char *full_data = (char *)calloc(1, buffer_size);
     ssize_t signed_buffer_size = buffer_size;
     ssize_t num_bytes_received = buffer_size;
     int cur_buffer_size = 0;
