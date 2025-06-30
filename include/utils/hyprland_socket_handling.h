@@ -3,6 +3,12 @@
 #ifndef HYPRLAND_SOCKET_HANDLING_H
 #define HYPRLAND_SOCKET_HANDLING_H
 
+#include <stdio.h>
+#include <cjson/cJSON.h>
+
+#include "data/data_structures.h"
+#include "data/constants.h"
+
 char *
 get_hyprland_socket(Socket socket); // SOCKET is for simply "socket", which only handles requests;
                                     // SOCKET2 is for "socket2", which handles events

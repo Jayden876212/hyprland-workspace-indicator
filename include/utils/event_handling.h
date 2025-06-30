@@ -3,6 +3,8 @@
 #ifndef EVENT_HANDLING_H
 #define EVENT_HANDLING_H
 
+#include "data/data_structures.h"
+
 int poll_for_socket_events(SocketData *events_data, int (*event_processor)(),
                            int (*function_executed)());
 
