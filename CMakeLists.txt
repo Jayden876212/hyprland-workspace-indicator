@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.31.7)
+cmake_minimum_required(VERSION 3.31.6)
 project(hyprland-workspace-indicator
 	VERSION 0.9.1
 	DESCRIPTION "A multi-monitor workspace indicator JSON output for use with EWW and Hyprland."
