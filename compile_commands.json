@@ -1,44 +1,44 @@
 [
 {
-  "directory": "/home/tdljayden/projects/hyprland-workspace-indicator",
-  "command": "/usr/bin/cc  -I/home/tdljayden/projects/hyprland-workspace-indicator/include  -o CMakeFiles/hyprland-workspaces.dir/src/main.c.o -c /home/tdljayden/projects/hyprland-workspace-indicator/src/main.c",
-  "file": "/home/tdljayden/projects/hyprland-workspace-indicator/src/main.c",
+  "directory": ".",
+  "command": "/usr/bin/cc  -Iinclude  -o CMakeFiles/hyprland-workspaces.dir/src/main.c.o -c src/main.c",
+  "file": "src/main.c",
   "output": "CMakeFiles/hyprland-workspaces.dir/src/main.c.o"
 },
 {
-  "directory": "/home/tdljayden/projects/hyprland-workspace-indicator",
-  "command": "/usr/bin/cc  -I/home/tdljayden/projects/hyprland-workspace-indicator/include  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/array_handling.c.o -c /home/tdljayden/projects/hyprland-workspace-indicator/src/helpers/array_handling.c",
-  "file": "/home/tdljayden/projects/hyprland-workspace-indicator/src/helpers/array_handling.c",
+  "directory": ".",
+  "command": "/usr/bin/cc  -Iinclude  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/array_handling.c.o -c src/helpers/array_handling.c",
+  "file": "src/helpers/array_handling.c",
   "output": "CMakeFiles/hyprland-workspaces.dir/src/helpers/array_handling.c.o"
 },
 {
-  "directory": "/home/tdljayden/projects/hyprland-workspace-indicator",
-  "command": "/usr/bin/cc  -I/home/tdljayden/projects/hyprland-workspace-indicator/include  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/json_handling.c.o -c /home/tdljayden/projects/hyprland-workspace-indicator/src/helpers/json_handling.c",
-  "file": "/home/tdljayden/projects/hyprland-workspace-indicator/src/helpers/json_handling.c",
+  "directory": ".",
+  "command": "/usr/bin/cc  -Iinclude  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/json_handling.c.o -c src/helpers/json_handling.c",
+  "file": "src/helpers/json_handling.c",
   "output": "CMakeFiles/hyprland-workspaces.dir/src/helpers/json_handling.c.o"
 },
 {
-  "directory": "/home/tdljayden/projects/hyprland-workspace-indicator",
-  "command": "/usr/bin/cc  -I/home/tdljayden/projects/hyprland-workspace-indicator/include  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/hyprland_struct_handling.c.o -c /home/tdljayden/projects/hyprland-workspace-indicator/src/helpers/hyprland_struct_handling.c",
-  "file": "/home/tdljayden/projects/hyprland-workspace-indicator/src/helpers/hyprland_struct_handling.c",
+  "directory": ".",
+  "command": "/usr/bin/cc  -Iinclude  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/hyprland_struct_handling.c.o -c src/helpers/hyprland_struct_handling.c",
+  "file": "src/helpers/hyprland_struct_handling.c",
   "output": "CMakeFiles/hyprland-workspaces.dir/src/helpers/hyprland_struct_handling.c.o"
 },
 {
-  "directory": "/home/tdljayden/projects/hyprland-workspace-indicator",
-  "command": "/usr/bin/cc  -I/home/tdljayden/projects/hyprland-workspace-indicator/include  -o CMakeFiles/hyprland-workspaces.dir/src/utils/bit_handling.c.o -c /home/tdljayden/projects/hyprland-workspace-indicator/src/utils/bit_handling.c",
-  "file": "/home/tdljayden/projects/hyprland-workspace-indicator/src/utils/bit_handling.c",
+  "directory": ".",
+  "command": "/usr/bin/cc  -Iinclude  -o CMakeFiles/hyprland-workspaces.dir/src/utils/bit_handling.c.o -c src/utils/bit_handling.c",
+  "file": "src/utils/bit_handling.c",
   "output": "CMakeFiles/hyprland-workspaces.dir/src/utils/bit_handling.c.o"
 },
 {
-  "directory": "/home/tdljayden/projects/hyprland-workspace-indicator",
-  "command": "/usr/bin/cc  -I/home/tdljayden/projects/hyprland-workspace-indicator/include  -o CMakeFiles/hyprland-workspaces.dir/src/utils/event_handling.c.o -c /home/tdljayden/projects/hyprland-workspace-indicator/src/utils/event_handling.c",
-  "file": "/home/tdljayden/projects/hyprland-workspace-indicator/src/utils/event_handling.c",
+  "directory": ".",
+  "command": "/usr/bin/cc  -Iinclude  -o CMakeFiles/hyprland-workspaces.dir/src/utils/event_handling.c.o -c hyprland-workspace-indicator/src/utils/event_handling.c",
+  "file": "src/utils/event_handling.c",
   "output": "CMakeFiles/hyprland-workspaces.dir/src/utils/event_handling.c.o"
 },
 {
-  "directory": "/home/tdljayden/projects/hyprland-workspace-indicator",
-  "command": "/usr/bin/cc  -I/home/tdljayden/projects/hyprland-workspace-indicator/include  -o CMakeFiles/hyprland-workspaces.dir/src/utils/hyprland_socket_handling.c.o -c /home/tdljayden/projects/hyprland-workspace-indicator/src/utils/hyprland_socket_handling.c",
-  "file": "/home/tdljayden/projects/hyprland-workspace-indicator/src/utils/hyprland_socket_handling.c",
+  "directory": ".",
+  "command": "/usr/bin/cc  -Iinclude  -o CMakeFiles/hyprland-workspaces.dir/src/utils/hyprland_socket_handling.c.o -c src/utils/hyprland_socket_handling.c",
+  "file": "src/utils/hyprland_socket_handling.c",
   "output": "CMakeFiles/hyprland-workspaces.dir/src/utils/hyprland_socket_handling.c.o"
 }
 ]

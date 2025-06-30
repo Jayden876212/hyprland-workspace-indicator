@@ -10,7 +10,6 @@ project(hyprland-workspace-indicator
 # to configure CI hooks like `clang-tidy-review`.
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 execute_process(COMMAND cp compile_commands.json ../compile_commands.json)
-execute_process(COMMAND sed -i "s@/build@@" ../compile_commands.json)
 
 include_directories(include)
 find_package(cJSON REQUIRED)
