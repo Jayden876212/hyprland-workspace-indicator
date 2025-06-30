@@ -11,8 +11,8 @@
 
 #include "utils/hyprland_socket_handling.h"
 
-int poll_for_socket_events(SocketData *events_data, int (*event_processor)(),
-                           int (*function_executed)()) {
+int poll_for_socket_events(SocketData *events_data, Callback event_processor,
+                           Callback function_executed) {
     // Poll the server for events that we can check for.
     if (poll(events_data->poll_descriptor, 1, -1) == -1) {
         perror("poll");
@@ -43,7 +43,7 @@ int poll_for_socket_events(SocketData *events_data, int (*event_processor)(),
     return 0;
 }
 
-int handle_workspace_socket_events(SocketData *events_data, int (*function_executed)()) {
+int handle_workspace_socket_events(SocketData *events_data, Callback function_executed) {
     // Initialise pointer for better readability.
     char *data_received = events_data->data_received;
 

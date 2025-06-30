@@ -28,4 +28,9 @@ typedef struct SocketData {
     struct pollfd *poll_descriptor;
 } SocketData;
 
+// Intialise function pointers so we can choose what behaviour we want when we check what events
+// are outputted.
+typedef int (*Callback)();
+typedef int (*EventHandler)(SocketData *, Callback);
+
 #endif

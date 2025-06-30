@@ -41,17 +41,16 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    // Intialise function pointers so we can choose what behaviour we want when we check what events
-    // are outputted.
     // The function event_handler processes events so we can check when the user interacts with the
     // compositor.
-    int (*event_handler)(SocketData *, int (*)()) = handle_workspace_socket_events;
+    EventHandler event_handler = handle_workspace_socket_events;
+
     // The function function_executed is to decide what action to take upon the event_handler's
     // condition having success (e.g. when the workspace is changed or when the monitor is
     // focused.)
     // We use the function initialise_and_print_workspace_info_as_json because that is the purpose
     // of the program.
-    int (*function_executed)() = initialise_and_print_workspace_info_as_json;
+    Callback function_executed = initialise_and_print_workspace_info_as_json;
 
     while (1) {
         // Poll for when the user interacts with the compositor. In this case, it checks for when
