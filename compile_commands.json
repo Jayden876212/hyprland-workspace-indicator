@@ -1,0 +1,44 @@
+[
+{
+  "directory": ".",
+  "command": "/usr/bin/clang  -I/github/workspace/include  -o CMakeFiles/hyprland-workspaces.dir/src/main.c.o -c /github/workspace/src/main.c",
+  "file": "/github/workspace/src/main.c",
+  "output": "CMakeFiles/hyprland-workspaces.dir/src/main.c.o"
+},
+{
+  "directory": ".",
+  "command": "/usr/bin/clang  -I/github/workspace/include  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/array_handling.c.o -c /github/workspace/src/helpers/array_handling.c",
+  "file": "/github/workspace/src/helpers/array_handling.c",
+  "output": "CMakeFiles/hyprland-workspaces.dir/src/helpers/array_handling.c.o"
+},
+{
+  "directory": ".",
+  "command": "/usr/bin/clang  -I/github/workspace/include  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/json_handling.c.o -c /github/workspace/src/helpers/json_handling.c",
+  "file": "/github/workspace/src/helpers/json_handling.c",
+  "output": "CMakeFiles/hyprland-workspaces.dir/src/helpers/json_handling.c.o"
+},
+{
+  "directory": ".",
+  "command": "/usr/bin/clang  -I/github/workspace/include  -o CMakeFiles/hyprland-workspaces.dir/src/helpers/hyprland_struct_handling.c.o -c /github/workspace/src/helpers/hyprland_struct_handling.c",
+  "file": "/github/workspace/src/helpers/hyprland_struct_handling.c",
+  "output": "CMakeFiles/hyprland-workspaces.dir/src/helpers/hyprland_struct_handling.c.o"
+},
+{
+  "directory": ".",
+  "command": "/usr/bin/clang  -I/github/workspace/include  -o CMakeFiles/hyprland-workspaces.dir/src/utils/bit_handling.c.o -c /github/workspace/src/utils/bit_handling.c",
+  "file": "/github/workspace/src/utils/bit_handling.c",
+  "output": "CMakeFiles/hyprland-workspaces.dir/src/utils/bit_handling.c.o"
+},
+{
+  "directory": ".",
+  "command": "/usr/bin/clang  -I/github/workspace/include  -o CMakeFiles/hyprland-workspaces.dir/src/utils/event_handling.c.o -c /github/workspace/src/utils/event_handling.c",
+  "file": "/github/workspace/src/utils/event_handling.c",
+  "output": "CMakeFiles/hyprland-workspaces.dir/src/utils/event_handling.c.o"
+},
+{
+  "directory": ".",
+  "command": "/usr/bin/clang  -I/github/workspace/include  -o CMakeFiles/hyprland-workspaces.dir/src/utils/hyprland_socket_handling.c.o -c /github/workspace/src/utils/hyprland_socket_handling.c",
+  "file": "/github/workspace/src/utils/hyprland_socket_handling.c",
+  "output": "CMakeFiles/hyprland-workspaces.dir/src/utils/hyprland_socket_handling.c.o"
+}
+]
