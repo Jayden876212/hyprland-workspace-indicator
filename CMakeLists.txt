@@ -5,6 +5,12 @@ project(hyprland-workspace-indicator
 	HOMEPAGE_URL "https://github.com/Jayden876212/hyprland-workspace-indicator"
 	LANGUAGES C
 )
+
+# We need to get the `compile_commands.json` and copy it to the project root
+# to configure CI hooks like `clang-tidy-review`.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+execute_process(COMMAND cp compile_commands.json ../compile_commands.json)
+
 include_directories(include)
 find_package(cJSON REQUIRED)
 add_executable(hyprland-workspaces
