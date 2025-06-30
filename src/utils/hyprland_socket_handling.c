@@ -154,14 +154,13 @@ cJSON *grab_json_from_socket_data(const char *command, SocketData *socket_data) 
         return NULL;
     }
 
-    char *data_received = socket_data->data_received;
-    data_received = recv_cat(socket_file_descriptor, MAX_BUFFER_SIZE, 0);
-    if (data_received == NULL) {
+    socket_data->data_received = recv_cat(socket_file_descriptor, MAX_BUFFER_SIZE, 0);
+    if (socket_data->data_received == NULL) {
         fprintf(stderr, "Error: Failed to receive socket data into dynamic pool of memory.");
     }
 
     // Parse the data using cJSON as json so we can easily access different information.
-    cJSON *bufferjson = cJSON_Parse(data_received);
+    cJSON *bufferjson = cJSON_Parse(socket_data->data_received);
     if (bufferjson == NULL) {
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL) {
