@@ -63,7 +63,7 @@ char *get_hyprland_socket(Socket socket_type) {
     int chars_written = SAFE_SNPRINTF(socket_path, his_buffer_size, "%s/hypr/%s/.%s.sock",
                                  xdg_runtime_dir, hyprland_instance_signature, socket_name_string);
     if (chars_written == -1) {
-        perror("malloc");
+        perror("snprintf");
         return NULL;
     }
 
