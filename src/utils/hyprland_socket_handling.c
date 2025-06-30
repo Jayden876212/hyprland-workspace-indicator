@@ -40,9 +40,8 @@ char *get_hyprland_socket(Socket socket_type) {
 
     // Add the rest of the path to the hyprland_instance_signature.
     int his_buffer_size = 0;
-    his_buffer_size =
-        (int) strlen(xdg_runtime_dir) + (int) strlen(hyprland_instance_signature)
-        + HIS_PATH_BUFFER_SIZE;
+    his_buffer_size = (int)strlen(xdg_runtime_dir) + (int)strlen(hyprland_instance_signature) +
+                      HIS_PATH_BUFFER_SIZE;
 
     // Configure the socket path depending on the socket given.
     // SOCKET is for "socket" (handles requests); SOCKET2 is for "socket2", (handles events).
@@ -60,8 +59,9 @@ char *get_hyprland_socket(Socket socket_type) {
     // Concatenate the hyprland_instance_signature, socket_name and the rest of the path
     // to get the full path to the socket.
     char socket_path[his_buffer_size];
-    int chars_written = SAFE_SNPRINTF(socket_path, his_buffer_size, "%s/hypr/%s/.%s.sock",
-                                 xdg_runtime_dir, hyprland_instance_signature, socket_name_string);
+    int chars_written =
+        SAFE_SNPRINTF(socket_path, his_buffer_size, "%s/hypr/%s/.%s.sock", xdg_runtime_dir,
+                      hyprland_instance_signature, socket_name_string);
     if (chars_written == -1) {
         perror("snprintf");
         return NULL;

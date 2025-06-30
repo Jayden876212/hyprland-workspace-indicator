@@ -15,7 +15,6 @@
 #include "utils/event_handling.h"
 #include "utils/hyprland_socket_handling.h"
 
-
 int main() {
     SocketData *events_data = NULL;
 

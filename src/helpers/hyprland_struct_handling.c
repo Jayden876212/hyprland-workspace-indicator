@@ -74,8 +74,8 @@ HyprlandData *initialise_hyprland_data_structure() {
     // indicator to work is abstracted into this data structure, where the functions are coupled
     // together using the HyprlandData struct.
 
-    HyprlandData * hyprland_data = NULL;
-    hyprland_data = (HyprlandData*)malloc(sizeof(HyprlandData));
+    HyprlandData *hyprland_data = NULL;
+    hyprland_data = (HyprlandData *)malloc(sizeof(HyprlandData));
     if (hyprland_data == NULL) {
         perror("malloc");
         return NULL;

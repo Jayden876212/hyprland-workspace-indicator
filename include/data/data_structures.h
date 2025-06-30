@@ -10,25 +10,25 @@
 #include <poll.h>
 
 typedef struct {
-    cJSON * monitors;
-    cJSON * workspaces;
-    cJSON * activeworkspace;
+    cJSON *monitors;
+    cJSON *workspaces;
+    cJSON *activeworkspace;
 
     int monitors_length;
     int workspaces_length;
 
-    uint16_t * workspace_array;
-    uint16_t * activeworkspace_array;
+    uint16_t *workspace_array;
+    uint16_t *activeworkspace_array;
 } HyprlandData;
 
 struct pollfd;
 
 typedef struct {
-    char * data_received;
+    char *data_received;
     struct pollfd *poll_descriptor;
 } SocketData;
 
-extern SocketData * events_data_global;
+extern SocketData *events_data_global;
 // The use of a global variable might seem like a strange choice here, but this is because
 // signal handlers don't accept any other arguments other than the signum. We set the global
 // variable to point to a local variable which is passed amongst multiple functions in

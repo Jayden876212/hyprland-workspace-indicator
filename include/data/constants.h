@@ -17,14 +17,8 @@
 #define CMD_WORKSPACES "-j/workspaces"
 #define CMD_ACTIVEWORKSPACE "-j/activeworkspace"
 
-typedef enum {
-    SOCKET,
-    SOCKET2
-} Socket;
+typedef enum { SOCKET, SOCKET2 } Socket;
 
-typedef enum {
-    WORKSPACES,
-    ACTIVEWORKSPACES
-} WorkspacesType;
+typedef enum { WORKSPACES, ACTIVEWORKSPACES } WorkspacesType;
 
 #endif
