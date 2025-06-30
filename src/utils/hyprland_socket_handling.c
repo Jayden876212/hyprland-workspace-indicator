@@ -1,3 +1,11 @@
+// Include a safer version of snprintf if provided by the standard library implementation
+#if defined(_MSC_VER)
+#define __STDC_WANT_LIB_EXT1__ 1
+#define SAFE_SNPRINTF snprintf_s
+#else
+#define SAFE_SNPRINTF snprintf // glibc does not yet support snprintf_s
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -52,7 +60,7 @@ char *get_hyprland_socket(Socket socket_type) {
     // Concatenate the hyprland_instance_signature, socket_name and the rest of the path
     // to get the full path to the socket.
     char socket_path[his_buffer_size];
-    int chars_written = snprintf(socket_path, his_buffer_size, "%s/hypr/%s/.%s.sock",
+    int chars_written = SAFE_SNPRINTF(socket_path, his_buffer_size, "%s/hypr/%s/.%s.sock",
                                  xdg_runtime_dir, hyprland_instance_signature, socket_name_string);
     if (chars_written == -1) {
         perror("malloc");
