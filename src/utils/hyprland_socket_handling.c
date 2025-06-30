@@ -128,9 +128,11 @@ char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
         num_bytes_received = recv(file_descriptor, buffer, buffer_size, flags);
         if (num_bytes_received == -1) {
             perror("recv");
+            free(full_data);
             return NULL;
         } else if (num_bytes_received == 0) {
             fprintf(stderr, "Error: Connection closed by the server.\n");
+            free(full_data);
             return NULL;
         }
 
