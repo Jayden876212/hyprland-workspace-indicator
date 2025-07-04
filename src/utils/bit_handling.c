@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "data/constants.h"
+#include "data/data_structures.h"
 
 // At first, bit manipulation might seem like a strange technique to create an array. After all it
 // does not use traditional notation for an array, making the code more verbose and less readable.
@@ -27,41 +28,41 @@ int print_binary(uint16_t integer) { // This is a test function for debugging on
     return 0;
 }
 
-uint16_t turn_on_bit_in_array(uint16_t bit_array, unsigned int position) {
+uint16_t turn_on_bit_in_array(BitInterface bit_interface) {
     // Check if the function user's given position is out of bounds for safety.
-    if (position > TOTAL_BITS_IN_INT) {
+    if (bit_interface.position > TOTAL_BITS_IN_INT) {
         fprintf(stderr, "Error accessing bit array: Given position is out of range.\n");
-        return bit_array;
+        return bit_interface.bit_array;
     }
 
     // Shift a bit based on the position given by the function user.
-    uint16_t bit = SINGULAR_BIT >> position;
+    uint16_t bit = SINGULAR_BIT >> bit_interface.position;
 
     // Perform OR on the bit and the existing bit_array to turn on the bit to 1.
-    bit_array |= bit;
+    bit_interface.bit_array |= bit;
 
-    return bit_array;
+    return bit_interface.bit_array;
 }
 
-bool access_bit_array(uint16_t bit_array, unsigned int position) {
+bool access_bit_array(BitInterface bit_interface) {
     // Check if the function user's given position is out of bounds for safety.
-    if (position > TOTAL_BITS_IN_INT) {
+    if (bit_interface.position > TOTAL_BITS_IN_INT) {
         fprintf(stderr, "Error accessing bit array: Given position is out of range.\n");
         return false;
     }
 
     // Take away 15 from the more human-readable position given by the function user.
-    int true_position = TRUE_BIT_POSITION_OFFSET - position;
+    int true_position = TRUE_BIT_POSITION_OFFSET - bit_interface.position;
 
     // Isolate the bit at a given position so it is on the right hand side of the bit array.
-    bit_array >>= true_position;
+    bit_interface.bit_array >>= true_position;
 
     // Use the rightmost bit to compare 1 with the isolated bit in the bit array using AND.
-    bit_array &= RIGHTMOST_BIT;
+    bit_interface.bit_array &= RIGHTMOST_BIT;
 
     // We want to return a boolean value rather than a 16-bit int because it uses 8 bit (half as
     // much memory). It is also more readable as the resulting JSON array will use a bool.
-    bool accessed_bit_value = bit_array;
+    bool accessed_bit_value = bit_interface.bit_array;
 
     return accessed_bit_value;
 }

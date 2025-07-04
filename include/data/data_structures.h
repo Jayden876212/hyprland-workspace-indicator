@@ -28,6 +28,11 @@ typedef struct SocketData {
     struct pollfd *poll_descriptor;
 } SocketData;
 
+typedef struct BitInterface {
+    uint16_t bit_array;
+    unsigned int position;
+} BitInterface;
+
 // Intialise function pointers so we can choose what behaviour we want when we check what events
 // are outputted.
 typedef int (*Callback)();
