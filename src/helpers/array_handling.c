@@ -5,6 +5,7 @@
 #include <string.h>
 
 // include/data
+#include "data/constants.h"
 #include "data/data_structures.h"
 
 // include/utils
@@ -64,7 +65,7 @@ int create_workspace_array(HyprlandData *hyprland_data) {
             if (strcmp(active_monitor, monitor_name) == 0) {
                 // Checks if it is workspace 10. This is because I think the user would usually
                 // access the 10th workspace with the 0 key on the keyboard in some key combination.
-                int target_workspace_id = (workspace_id != 10) ? workspace_id : 0;
+                int target_workspace_id = (workspace_id != WORKSPACE_10) ? workspace_id : 0;
 
                 // Uses the bit manipulating function (see the src file for bit handling) to turn on
                 // the specified bit. Uses the workspace ID that the user sees as the position in
@@ -110,7 +111,7 @@ int create_activeworkspace_array(HyprlandData *hyprland_data) {
 
         // See previous comments on the other function
         if (strcmp(active_monitor, monitor_name) == 0) {
-            int target_workspace_id = (workspace_id != 10) ? workspace_id : 0;
+            int target_workspace_id = (workspace_id != WORKSPACE_10) ? workspace_id : 0;
             BitInterface bit_interface = {.bit_array = activeworkspace_array[i],
                                           .position = target_workspace_id};
             activeworkspace_array[i] = turn_on_bit_in_array(bit_interface);
