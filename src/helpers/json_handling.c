@@ -19,10 +19,7 @@
 void print_array_json_formatted(uint16_t bit_array) {
     for (int n = 0; n < WORKSPACES_AMOUNT; ++n) {
         // Access a bit among the specific 16 bits at the nth position.
-        BitInterface bit_interface = {
-            .bit_array = bit_array,
-            .position = n
-        };
+        BitInterface bit_interface = {.bit_array = bit_array, .position = n};
         bool accessed_bit = access_bit_array(bit_interface);
 
         // Check what the accessed bit evaluates to and print true or false. This is so the user of
