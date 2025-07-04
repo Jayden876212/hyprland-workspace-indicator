@@ -16,9 +16,9 @@
 // Void function is used to reduce repeated code as both workspaces_array and activeworkspace_array
 // have a similar printing method within the array.
 void print_array_json_formatted(uint16_t bit_array) {
-    for (int n = 0; n < WORKSPACES_AMOUNT; ++n) {
+    for (int workspace_index = 0; workspace_index < WORKSPACES_AMOUNT; ++workspace_index) {
         // Access a bit among the specific 16 bits at the nth position.
-        BitInterface bit_interface = {.bit_array = bit_array, .position = n};
+        BitInterface bit_interface = {.bit_array = bit_array, .position = workspace_index};
         bool accessed_bit = access_bit_array(bit_interface);
 
         // Check what the accessed bit evaluates to and print true or false. This is so the user of
@@ -26,9 +26,9 @@ void print_array_json_formatted(uint16_t bit_array) {
         // looking up the number in the array and checking if it is true or false.
         accessed_bit ? printf("true") : printf("false");
 
-        if (n != WORKSPACES_AMOUNT - 1) // Checks if we are at the end of the bool array. We would
-                                        // not want to print a comma at the end because that is
-                                        // invalid json.
+        if (workspace_index != WORKSPACES_AMOUNT - 1) // Checks if we are at the end of the bool
+                                                      // array. We would not want to print a comma
+                                                      // at the end because that is invalid json.
             printf(","); // Print a comma to seperate values so it is valid json to be parsed.
     }
 }
