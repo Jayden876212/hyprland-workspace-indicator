@@ -1,8 +1,6 @@
 #include <stdio.h>
 
-#include <sys/socket.h>
-
-#include <poll.h>
+#include <sys/poll.h>
 #include <string.h>
 
 // include/data
