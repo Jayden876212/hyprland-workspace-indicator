@@ -4,6 +4,7 @@
 #define BIT_HANDLING_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 uint16_t turn_on_bit_in_array(uint16_t bit_array, unsigned int position);
 
