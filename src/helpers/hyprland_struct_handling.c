@@ -10,8 +10,6 @@
 #include <cjson/cJSON.h>
 
 #include <sys/socket.h>
-#include <sys/types.h>
-#include <sys/un.h>
 
 // include/data
 #include "data/constants.h"
@@ -75,7 +73,8 @@ HyprlandData *initialise_hyprland_data_structure() {
     // code width and repeated code in our coupling. All the code for managing the data for our
     // indicator to work is abstracted into this data structure, where the functions are coupled
     // together using the HyprlandData struct.
-    HyprlandData *hyprland_data;
+
+    HyprlandData *hyprland_data = NULL;
     hyprland_data = (HyprlandData *)malloc(sizeof(HyprlandData));
     if (hyprland_data == NULL) {
         perror("malloc");
@@ -109,7 +108,7 @@ HyprlandData *initialise_hyprland_data_structure() {
 
     // These are our arrays where we will store our processed data. These will be printed to json
     // format later. See bit_handling.c for an explanation as to why we use a 16-bit integer.
-    uint16_t *workspace_array;
+    uint16_t *workspace_array = NULL;
     workspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
     if (workspace_array == NULL) {
         perror("malloc");
@@ -118,7 +117,7 @@ HyprlandData *initialise_hyprland_data_structure() {
     }
     hyprland_data->workspace_array = workspace_array;
 
-    uint16_t *activeworkspace_array;
+    uint16_t *activeworkspace_array = NULL;
     activeworkspace_array = (uint16_t *)malloc(hyprland_data->monitors_length * sizeof(uint16_t));
     if (activeworkspace_array == NULL) {
         perror("malloc");
@@ -131,8 +130,9 @@ HyprlandData *initialise_hyprland_data_structure() {
     return hyprland_data;
 }
 
+// No linting because this is a helper function to free all related resources
+// NOLINTNEXTLINE(readability-non-const-parameter)
 void delete_hyprland_data_structure(HyprlandData *hyprland_data) {
-    // This function provides an easy way to free all the memory in our data structure.
     cJSON_Delete(hyprland_data->monitors);
     hyprland_data->monitors = NULL;
     cJSON_Delete(hyprland_data->activeworkspace);
@@ -176,9 +176,9 @@ SocketData *initialise_socket_data_structure() {
     return socket_data;
 }
 
+// No linting because this is a helper function to free all related resources
+// NOLINTNEXTLINE(readability-non-const-parameter)
 void delete_socket_data_structure(SocketData *socket_data) {
-    // This function provides an easy way to free all the memory in our data structure.
-
     // The OS might not be able to close the socket so we warn the user of this.
     int close_result = close(socket_data->poll_descriptor->fd);
     if (close_result == -1) {

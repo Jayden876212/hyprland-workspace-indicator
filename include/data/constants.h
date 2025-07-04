@@ -8,6 +8,7 @@
 #define WORKSPACES_AMOUNT 10
 
 #define BITWISE_FALSE 0
+#define TRUE_BIT_POSITION_OFFSET 15
 
 #define EVENT_WORKSPACE_CHANGED "workspace>>"
 #define EVENT_MONITOR_CHANGED "focusedmon>>"
@@ -16,14 +17,8 @@
 #define CMD_WORKSPACES "-j/workspaces"
 #define CMD_ACTIVEWORKSPACE "-j/activeworkspace"
 
-typedef enum {
-    SOCKET,
-    SOCKET2
-} Socket;
+typedef enum { SOCKET, SOCKET2 } Socket;
 
-typedef enum {
-    WORKSPACES,
-    ACTIVEWORKSPACES
-} WorkspacesType;
+typedef enum { WORKSPACES, ACTIVEWORKSPACES } WorkspacesType;
 
 #endif

@@ -1,10 +1,15 @@
-cmake_minimum_required(VERSION 3.31.7)
+cmake_minimum_required(VERSION 3.28.3)
 project(hyprland-workspace-indicator
 	VERSION 0.9.1
 	DESCRIPTION "A multi-monitor workspace indicator JSON output for use with EWW and Hyprland."
 	HOMEPAGE_URL "https://github.com/Jayden876212/hyprland-workspace-indicator"
 	LANGUAGES C
 )
+
+# We need to get the `compile_commands.json` to configure CI hooks like
+# `clang-tidy-review` as well as language servers like clangd.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 include_directories(include)
 find_package(cJSON REQUIRED)
 add_executable(hyprland-workspaces

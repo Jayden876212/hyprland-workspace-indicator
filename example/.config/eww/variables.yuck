@@ -1,0 +1,1 @@
+(deflisten workspaces 'scripts/workspaces.sh')

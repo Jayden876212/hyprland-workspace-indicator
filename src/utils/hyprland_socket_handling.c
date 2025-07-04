@@ -1,3 +1,11 @@
+// Include a safer version of snprintf if provided by the standard library implementation
+#if defined(_MSC_VER)
+#define __STDC_WANT_LIB_EXT1__ 1
+#define SAFE_SNPRINTF snprintf_s
+#else
+#define SAFE_SNPRINTF snprintf // glibc does not yet support snprintf_s
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -5,7 +13,6 @@
 #include <unistd.h>
 
 #include <sys/socket.h>
-#include <sys/types.h>
 #include <sys/un.h>
 
 #include <cjson/cJSON.h>
@@ -33,12 +40,13 @@ char *get_hyprland_socket(Socket socket_type) {
     }
 
     // Add the rest of the path to the hyprland_instance_signature.
-    int his_buffer_size =
-        strlen(xdg_runtime_dir) + strlen(hyprland_instance_signature) + HIS_PATH_BUFFER_SIZE;
+    int his_buffer_size = 0;
+    his_buffer_size = (int)strlen(xdg_runtime_dir) + (int)strlen(hyprland_instance_signature) +
+                      HIS_PATH_BUFFER_SIZE;
 
     // Configure the socket path depending on the socket given.
     // SOCKET is for "socket" (handles requests); SOCKET2 is for "socket2", (handles events).
-    char *socket_name_string;
+    char *socket_name_string = NULL;
     if (socket_type == SOCKET) {
         socket_name_string = "socket";
     } else if (socket_type == SOCKET2) {
@@ -52,10 +60,11 @@ char *get_hyprland_socket(Socket socket_type) {
     // Concatenate the hyprland_instance_signature, socket_name and the rest of the path
     // to get the full path to the socket.
     char socket_path[his_buffer_size];
-    int chars_written = snprintf(socket_path, his_buffer_size, "%s/hypr/%s/.%s.sock",
-                                 xdg_runtime_dir, hyprland_instance_signature, socket_name_string);
+    int chars_written =
+        SAFE_SNPRINTF(socket_path, his_buffer_size, "%s/hypr/%s/.%s.sock", xdg_runtime_dir,
+                      hyprland_instance_signature, socket_name_string);
     if (chars_written == -1) {
-        perror("malloc");
+        perror("snprintf");
         return NULL;
     }
 
@@ -105,7 +114,11 @@ int set_up_hyprland_socket(Socket socket_type, SocketData *socket_data) {
 // Looped version of recv that dynamically allocates a growing chunk of memory to store data
 // retrieved.
 char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
-    char *full_data = (char *)calloc(0, 0);
+    char *full_data = (char *)calloc(1, buffer_size);
+    if (full_data == NULL) {
+        perror("calloc");
+        return NULL;
+    }
     ssize_t signed_buffer_size = buffer_size;
     ssize_t num_bytes_received = buffer_size;
     int cur_buffer_size = 0;
@@ -116,9 +129,11 @@ char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
         num_bytes_received = recv(file_descriptor, buffer, buffer_size, flags);
         if (num_bytes_received == -1) {
             perror("recv");
+            free(full_data);
             return NULL;
         } else if (num_bytes_received == 0) {
             fprintf(stderr, "Error: Connection closed by the server.\n");
+            free(full_data);
             return NULL;
         }
 
@@ -146,14 +161,13 @@ cJSON *grab_json_from_socket_data(const char *command, SocketData *socket_data) 
         return NULL;
     }
 
-    char *data_received = socket_data->data_received;
-    data_received = recv_cat(socket_file_descriptor, MAX_BUFFER_SIZE, 0);
-    if (data_received == NULL) {
+    socket_data->data_received = recv_cat(socket_file_descriptor, MAX_BUFFER_SIZE, 0);
+    if (socket_data->data_received == NULL) {
         fprintf(stderr, "Error: Failed to receive socket data into dynamic pool of memory.");
     }
 
     // Parse the data using cJSON as json so we can easily access different information.
-    cJSON *bufferjson = cJSON_Parse(data_received);
+    cJSON *bufferjson = cJSON_Parse(socket_data->data_received);
     if (bufferjson == NULL) {
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL) {
