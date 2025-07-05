@@ -147,7 +147,7 @@ char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
             return NULL;
         }
         full_data = temporary_buffer;
-        strcat(full_data, buffer);
+        strncat(full_data, buffer, num_bytes_received);
     }
 
     return full_data;
