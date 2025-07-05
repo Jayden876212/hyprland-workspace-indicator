@@ -10,7 +10,6 @@
 #include <stdlib.h>
 
 #include <string.h>
-#include <unistd.h>
 
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -113,7 +112,7 @@ int set_up_hyprland_socket(Socket socket_type, SocketData *socket_data) {
 
 // Looped version of recv that dynamically allocates a growing chunk of memory to store data
 // retrieved.
-char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
+char *recv_cat(int file_descriptor, ssize_t buffer_size, int flags) {
     char *full_data = (char *)calloc(1, buffer_size);
     if (full_data == NULL) {
         perror("calloc");
@@ -121,7 +120,7 @@ char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
     }
     ssize_t signed_buffer_size = buffer_size;
     ssize_t num_bytes_received = buffer_size;
-    int cur_buffer_size = 0;
+    ssize_t cur_buffer_size = 0;
 
     while (num_bytes_received == signed_buffer_size) {
         char buffer[buffer_size];
@@ -129,10 +128,11 @@ char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
         num_bytes_received = recv(file_descriptor, buffer, buffer_size, flags);
         if (num_bytes_received == -1) {
             perror("recv");
-            free(full_data);
-            return NULL;
         } else if (num_bytes_received == 0) {
             fprintf(stderr, "Error: Connection closed by the server.\n");
+        }
+
+        if (num_bytes_received < 1) {
             free(full_data);
             return NULL;
         }
@@ -140,8 +140,14 @@ char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
         buffer[num_bytes_received] = '\0';
         cur_buffer_size += buffer_size;
 
-        full_data = realloc(full_data, cur_buffer_size);
-        strcat(full_data, buffer);
+        void *temporary_buffer = realloc(full_data, cur_buffer_size);
+        if (temporary_buffer == NULL) {
+            free(full_data);
+            perror("realloc");
+            return NULL;
+        }
+        full_data = temporary_buffer;
+        strncat(full_data, buffer, num_bytes_received);
     }
 
     return full_data;

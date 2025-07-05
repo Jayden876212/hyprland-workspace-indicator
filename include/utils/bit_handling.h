@@ -4,10 +4,13 @@
 #define BIT_HANDLING_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
-uint16_t turn_on_bit_in_array(uint16_t bit_array, unsigned int position);
+#include "data/data_structures.h"
 
-bool access_bit_array(uint16_t bit_array, unsigned int position);
+uint16_t turn_on_bit_in_array(BitInterface bit_interface);
+
+bool access_bit_array(BitInterface bit_interface);
 
 int print_binary(uint16_t integer);
 
