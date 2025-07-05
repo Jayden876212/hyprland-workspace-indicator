@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 
 // include/data
 #include "data/constants.h"
@@ -25,7 +25,7 @@ void print_array_json_formatted(uint16_t bit_array) {
         // the program can use these values to hide or unhide a numbered workspace indicator by
         // looking up the number in the array and checking if it is true or false.
         accessed_bit ? printf("true") : printf("false");
-        
+
         // Checks if we are at the end of the bool array. We would not want to print a comma
         // at the end because that is invalid json.
         if (workspace_index != WORKSPACES_AMOUNT - 1) {

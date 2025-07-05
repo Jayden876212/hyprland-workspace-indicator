@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include <sys/poll.h>
 #include <string.h>
+#include <sys/poll.h>
 
 // include/data
 #include "data/constants.h"
