@@ -1,7 +1,7 @@
 ---
-name: 'DEBT: '
+name: DEBT
 about: This is a measure taken to increase the quality of the code behind the scenes.
-title: ''
+title: 'DEBT: '
 labels: debt
 assignees: ''
 
