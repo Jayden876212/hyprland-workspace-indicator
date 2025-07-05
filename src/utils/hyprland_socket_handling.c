@@ -140,7 +140,13 @@ char *recv_cat(int file_descriptor, size_t buffer_size, int flags) {
         buffer[num_bytes_received] = '\0';
         cur_buffer_size += buffer_size;
 
-        full_data = realloc(full_data, cur_buffer_size);
+        void *temporary_buffer = realloc(full_data, cur_buffer_size);
+        if (temporary_buffer == NULL) {
+            free(full_data);
+            perror("realloc");
+            return NULL;
+        }
+        full_data = temporary_buffer;
         strcat(full_data, buffer);
     }
 
