@@ -4,12 +4,10 @@
 #include <string.h>
 
 #include <errno.h>
-#include <poll.h>
+#include <sys/poll.h>
 #include <unistd.h>
 
 #include <cjson/cJSON.h>
-
-#include <sys/socket.h>
 
 // include/data
 #include "data/constants.h"
