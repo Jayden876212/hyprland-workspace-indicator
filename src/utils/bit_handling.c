@@ -1,8 +1,8 @@
-#include "data/constants.h"        // for TOTAL_BITS_IN_INT, RIGHTMOST_BIT, SINGULAR_BIT, TRUE_BIT_POSITION_OFFSET
-#include "data/data_structures.h"  // for BitInterface
-#include <stdbool.h>               // for bool, false
-#include <stdint.h>                // for uint16_t
-#include <stdio.h>                 // for printf, fprintf, stderr
+#include "data/constants.h" // for TOTAL_BITS_IN_INT, RIGHTMOST_BIT, SINGULAR_BIT, TRUE_BIT_POSITION_OFFSET
+#include "data/data_structures.h" // for BitInterface
+#include <stdbool.h>              // for bool, false
+#include <stdint.h>               // for uint16_t
+#include <stdio.h>                // for printf, fprintf, stderr
 
 // At first, bit manipulation might seem like a strange technique to create an array. After all it
 // does not use traditional notation for an array, making the code more verbose and less readable.

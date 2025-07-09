@@ -1,10 +1,10 @@
-#include "data/constants.h"        // for WORKSPACE_10
-#include "data/data_structures.h"  // for HyprlandData, BitInterface
-#include "utils/bit_handling.h"    // for turn_on_bit_in_array
-#include <cjson/cJSON.h>           // for cJSON_GetObjectItem, cJSON, cJSON_GetArrayItem
-#include <stdint.h>                // for uint16_t
-#include <stdio.h>                 // for NULL, fprintf, stderr
-#include <string.h>                // for strcmp
+#include "data/constants.h"       // for WORKSPACE_10
+#include "data/data_structures.h" // for HyprlandData, BitInterface
+#include "utils/bit_handling.h"   // for turn_on_bit_in_array
+#include <cjson/cJSON.h>          // for cJSON_GetObjectItem, cJSON, cJSON_GetArrayItem
+#include <stdint.h>               // for uint16_t
+#include <stdio.h>                // for NULL, fprintf, stderr
+#include <string.h>               // for strcmp
 
 int create_workspace_array(HyprlandData *hyprland_data) {
     // Initialise pointer to workspace_array to improve code readability (reduces width).
