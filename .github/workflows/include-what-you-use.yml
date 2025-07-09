@@ -24,20 +24,7 @@ jobs:
         cmake -S . -B build
       env:
         CC: clang
-        CXX: clang++
 
     - name: iwyu_tool
       run: |
-        iwyu_tool -p ./build/compile_commands.json -j $(nproc) -- -w -Xiwyu --max_line_length=1024  -Xiwyu --quoted_includes_first -Xiwyu --update_comments > iwyu.log
-
-    - uses: actions/upload-artifact@v4
-      if: success() || failure()
-      with:
-        name: Compilation Database (include-what-you-use)
-        path: ./build/compile_commands.json
-
-    - uses: actions/upload-artifact@v4
-      if: success() || failure()
-      with:
-        name: Logs (include-what-you-use)
-        path: ./*.log
+        iwyu_tool -p ./build/compile_commands.json -j $(nproc) -- -w -Xiwyu --max_line_length=1024  -Xiwyu --quoted_includes_first -Xiwyu --update_comments
