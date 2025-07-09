@@ -1,13 +1,9 @@
-#include <stdio.h>
-
-#include <string.h>
-#include <sys/poll.h>
-
-// include/data
-#include "data/constants.h"
-#include "data/data_structures.h"
-
-#include "utils/hyprland_socket_handling.h"
+#include "data/constants.h"                  // for EVENT_MONITOR_CHANGED, EVENT_WORKSPACE_CHANGED, MAX_BUFFER_SIZE
+#include "data/data_structures.h"            // for SocketData, Callback
+#include "utils/hyprland_socket_handling.h"  // for recv_cat
+#include <poll.h>                            // for poll, pollfd, POLLIN
+#include <stdio.h>                           // for fprintf, perror, stderr, NULL
+#include <string.h>                          // for strstr
 
 int poll_for_socket_events(SocketData *events_data, Callback event_processor,
                            Callback function_executed) {
