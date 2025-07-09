@@ -2,7 +2,7 @@
 
 ## What is it?
 
-![Animated demonstration](docs/demonstration.gif)
+![Animated demonstration](demonstration.gif)
 
 A multi-monitor workspace indicator for [Hyprland](https://github.com/hyprwm/Hyprland) that can be integrated with [EWW](https://github.com/elkowar/eww) to display available workspaces.
 
@@ -53,7 +53,7 @@ You can look at the [following section](README.md#running-with-an-example-widget
 
 ## Running with an example widget
 
-The example widget, script, and other configuration files are located in [`example/.config/eww`](example) to show you what an implementation would look like.
+The example widget, script, and other configuration files are located in [`../example/.config/eww`](example) to show you what an implementation would look like.
 
 When `hyprland-workspaces` is installed to your `$PATH`, EWW should be able to execute it in a script:
 
