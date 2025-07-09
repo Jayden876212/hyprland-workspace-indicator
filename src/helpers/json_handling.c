@@ -1,17 +1,12 @@
-#include <stdint.h>
-#include <stdio.h>
-
-// include/data
-#include "data/constants.h"
-#include "data/data_structures.h"
-
-// include/helpers
-#include "helpers/array_handling.h"
-#include "helpers/hyprland_struct_handling.h"
 #include "helpers/json_handling.h"
-
-// include/utils
-#include "utils/bit_handling.h"
+#include "data/constants.h"         // for WORKSPACES_AMOUNT
+#include "data/data_structures.h"   // for HyprlandData, BitInterface
+#include "helpers/array_handling.h" // for create_activeworkspace_array, create_workspace_array
+#include "helpers/hyprland_struct_handling.h" // for delete_hyprland_data_structure, initialise_hyprland_data_structure
+#include "utils/bit_handling.h" // for access_bit_array
+#include <stdbool.h>            // for bool
+#include <stdint.h>             // for uint16_t
+#include <stdio.h>              // for printf, fflush, stdout
 
 // Void function is used to reduce repeated code as both workspaces_array and activeworkspace_array
 // have a similar printing method within the array.
