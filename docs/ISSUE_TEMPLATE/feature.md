@@ -1,11 +1,11 @@
 ---
 name: FEATURE
-about: Brand new requirement/feature adding valuable functionality that was not there
+about:
+  Brand new requirement/feature adding valuable functionality that was not there
   before.
-title: 'FEATURE: '
+title: "FEATURE: "
 labels: feature
-assignees: ''
-
+assignees: ""
 ---
 
 # {INSERT_ISSUE_TITLE_HERE}

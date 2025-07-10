@@ -1,11 +1,11 @@
 ---
 name: DEFECT
-about: Unintended behaviour of the software product that affects the ability to meet
+about:
+  Unintended behaviour of the software product that affects the ability to meet
   requirements.
-title: 'DEFECT: '
+title: "DEFECT: "
 labels: defect
-assignees: ''
-
+assignees: ""
 ---
 
 # {INSERT_ISSUE_TITLE_HERE}

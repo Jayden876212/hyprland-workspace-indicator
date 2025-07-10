@@ -1,10 +1,9 @@
 ---
 name: DEBT
 about: This is a measure taken to increase the quality of the code behind the scenes.
-title: 'DEBT: '
+title: "DEBT: "
 labels: debt
-assignees: ''
-
+assignees: ""
 ---
 
 # {INSERT_ISSUE_TITLE_HERE}

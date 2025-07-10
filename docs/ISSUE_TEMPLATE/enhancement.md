@@ -1,11 +1,11 @@
 ---
 name: ENHANCEMENT
-about: Further development of some existing feature/requirement to bring more value
+about:
+  Further development of some existing feature/requirement to bring more value
   to the end user.
-title: 'ENHANCEMENT: '
+title: "ENHANCEMENT: "
 labels: enhancement
-assignees: ''
-
+assignees: ""
 ---
 
 # {INSERT_ISSUE_TITLE_HERE}
