@@ -8,7 +8,14 @@ assignees: ''
 
 ---
 
-- [ ] I have read `CONTRIBUTING.md`.
+# {INSERT_ISSUE_TITLE_HERE}
+
+## Review Checklist
+
+- [ ] I have read [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## Proposed Changes
+
 - [ ] What behaviour are you expecting?
 - [ ] What behaviour are you seeing?
 - [ ] How does this impact the ability to access functionality? If it doesn't impact functionality, how does it impact your experience?
