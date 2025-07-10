@@ -13,7 +13,6 @@
 #include "utils/event_handling.h"
 #include "utils/hyprland_socket_handling.h"
 
-int main() {
     SocketData *events_data = NULL;
 
     // We do not need to have a signal handler because the operating system handles closing file
