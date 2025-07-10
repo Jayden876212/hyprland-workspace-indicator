@@ -1,4 +1,4 @@
-# {INSERT_ISSUE_TITLE_HERE}
+# {INSERT_PR_TITLE_HERE}
 
 ## Review Checklist
 
