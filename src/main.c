@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <cjson/cJSON.h>
-
 // include/data
 #include "data/constants.h"
 #include "data/data_structures.h"

@@ -1,23 +1,15 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <errno.h>
-#include <sys/poll.h>
-#include <unistd.h>
-
-#include <cjson/cJSON.h>
-
-// include/data
-#include "data/constants.h"
-#include "data/data_structures.h"
-
-// include/helpers
 #include "helpers/hyprland_struct_handling.h"
-
-// include/utils
-#include "utils/hyprland_socket_handling.h"
+#include "data/constants.h" // for CMD_ACTIVEWORKSPACE, CMD_MONITORS, CMD_WORKSPACES, MAX_BUFFER_SIZE
+#include "data/data_structures.h"           // for HyprlandData, SocketData
+#include "utils/hyprland_socket_handling.h" // for grab_json_from_socket_data
+#include <cjson/cJSON.h> // for cJSON_Delete, cJSON_GetArraySize, cJSON_IsArray, cJSON
+#include <errno.h>       // for errno
+#include <poll.h>        // for pollfd, POLLIN
+#include <stdint.h>      // for uint16_t
+#include <stdio.h>       // for NULL, fprintf, perror, stderr
+#include <stdlib.h>      // for free, malloc
+#include <string.h>      // for strerror
+#include <unistd.h>      // for close
 
 cJSON *allocate_and_grab_json(const char *cmd) { // This function exists to reduce repeated code.
     // Initialise the socket data structure so it can be used to receive the json data.
