@@ -12,7 +12,7 @@ assignees: ''
 
 ## Review Checklist
 
-- [ ] I have read [`CONTRIBUTING.md`](CONTRIBUTING.md).
+- [ ] I have read [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 
 ## Proposed Changes
 
