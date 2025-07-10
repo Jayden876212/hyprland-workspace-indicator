@@ -1,2 +1,1 @@
 Checks: "-*,performance-*,readability-*,bugprone-*,clang-analyzer-*,cppcoreguidelines-*,mpi-*,misc-*,-*DeprecatedOrUnsafeBufferHandling*"
-

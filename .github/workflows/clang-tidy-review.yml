@@ -8,21 +8,21 @@ jobs:
   clang-tidy-review:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    # Optionally generate compile_commands.json
+      # Optionally generate compile_commands.json
 
-    - uses: ZedThree/clang-tidy-review@v0.21.0
-      id: review
-      with:
-        apt_packages: libcjson-dev
-        cmake_command: cmake .
-        config_file: .clang-tidy
+      - uses: ZedThree/clang-tidy-review@v0.21.0
+        id: review
+        with:
+          apt_packages: libcjson-dev
+          cmake_command: cmake .
+          config_file: .clang-tidy
 
-    # Uploads an artefact containing clang_fixes.json
-    - uses: ZedThree/clang-tidy-review/upload@v0.21.0
-      id: upload-review
+      # Uploads an artefact containing clang_fixes.json
+      - uses: ZedThree/clang-tidy-review/upload@v0.21.0
+        id: upload-review
 
-    # If there are any comments, fail the check
-    - if: steps.review.outputs.total_comments > 0
-      run: exit 1
+      # If there are any comments, fail the check
+      - if: steps.review.outputs.total_comments > 0
+        run: exit 1
