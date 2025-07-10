@@ -1,6 +1,9 @@
 # {{ YOUR_TITLE_HERE }}
 
 - [ ] I have read `CONTRIBUTING.md`.
-- [ ] What issue/s does this solve?
-- [ ] How does it solve these issue/s?
-- [ ] Are there any other changes in particular that you made unrelated to the issue/s?
+- Issues solved by proposed changes: 
+- The proposed changes solve these issues by...
+- Other specific changes include:
+    - Change 1
+    - Change 2
+    - Change 3
