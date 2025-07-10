@@ -1,0 +1,27 @@
+name: cmake-build
+
+on:
+  pull_request:
+    branches: ["main", "develop"]
+jobs:
+  cmake-build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install missing software on debian/ubuntu
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake clang make libcjson-dev
+
+      - name: Prepare CMake
+        run: |
+          ./configure
+
+      - name: Run GNU Make
+        run: |
+          cd build
+          make
