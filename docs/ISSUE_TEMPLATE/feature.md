@@ -8,6 +8,7 @@ assignees: Jayden876212
 
 ---
 
+- [ ] I have read `CONTRIBUTING.md`.
 - [ ] What feature do you want to add to the program?
 - [ ] What would this feature contribute to the program? How would this feature benefit you?
 - [ ] Are there any other specific requirements you have regarding the feature's implementation?

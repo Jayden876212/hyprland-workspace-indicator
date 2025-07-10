@@ -8,6 +8,7 @@ assignees: ''
 
 ---
 
+- [ ] I have read `CONTRIBUTING.md`.
 - [ ] What behaviour are you expecting?
 - [ ] What behaviour are you seeing?
 - [ ] How does this impact the ability to access functionality? If it doesn't impact functionality, how does it impact your experience?
