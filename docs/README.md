@@ -139,9 +139,3 @@ Build requirements:
 3. Set a `deflisten` variable in eww with the workspaces_script as the input.
 4. Create a `defwidget` that uses that variable for `:reveal` or `:visible` as seen by the example code in `example/`.
 5. Implement the widget in a `defwindow`, like your eww bar for example.
-
-## Credits
-
-I would like to thank the developers of these wonderful projects:
-
-- https://github.com/DaveGamble/cJSON
