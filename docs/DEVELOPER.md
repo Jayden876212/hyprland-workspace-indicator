@@ -1,5 +1,9 @@
 # Hyprland Workspace Indicator - Developer Handbook 
 
+## Contributing
+
+To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
+
 ## How to build and install (eww)
 
 Build requirements:
@@ -12,4 +16,3 @@ Build requirements:
 3. Set a `deflisten` variable in eww with the workspaces_script as the input.
 4. Create a `defwidget` that uses that variable for `:reveal` or `:visible` as seen by the example code in `example/`.
 5. Implement the widget in a `defwindow`, like your eww bar for example.
-

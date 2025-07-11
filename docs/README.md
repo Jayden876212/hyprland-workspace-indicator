@@ -126,3 +126,11 @@ The widget is then placed in a window:
   )
 )
 ```
+
+## Contributing
+
+To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
+
+## Developing
+
+To guide developers, there is a [*developer handbook*](DEVELOPER.md).
