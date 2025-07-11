@@ -13,6 +13,19 @@ This is a developer handbook that will guide developers with:
 
 To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
 
+## Dependencies
+
+### Basic Development Toolchain
+
+- [C Programming Language](https://www.c-language.org/)
+- Basic Toolchain
+	- Compiler - [Clang](https://clang.llvm.org/)
+	- Build System - [CMake](https://cmake.org/)
+	- Debugger - [Valgrind](https://valgrind.org/)
+	- Libraries:
+		- Standard Library - [The GNU C Library](https://www.gnu.org/software/libc/)
+		- Other Libraries - [cJSON](https://github.com/DaveGamble/cJSON)
+
 ## How to build and install (eww)
 
 Build requirements:
