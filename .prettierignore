@@ -1,0 +1,7 @@
+# Copy `.gitignore`
+.cache
+/build*
+
+# Ignore C source and header files because these are already checked with better tools
+*.c
+*.h

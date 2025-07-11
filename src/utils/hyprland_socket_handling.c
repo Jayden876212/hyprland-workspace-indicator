@@ -6,22 +6,16 @@
 #define SAFE_SNPRINTF snprintf // glibc does not yet support snprintf_s
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <string.h>
-
-#include <sys/socket.h>
-#include <sys/un.h>
-
-#include <cjson/cJSON.h>
-
-// include/data
-#include "data/constants.h"
-#include "data/data_structures.h"
-
-// include/helpers
-#include "helpers/hyprland_struct_handling.h"
+#include "data/constants.h" // for SOCKET, Socket, HIS_PATH_BUFFER_SIZE, MAX_BUFFER_SIZE, SOCKET2
+#include "data/data_structures.h"             // for SocketData
+#include "helpers/hyprland_struct_handling.h" // for delete_socket_data_structure
+#include <cjson/cJSON.h>                      // for cJSON_GetErrorPtr, cJSON_Parse, cJSON
+#include <poll.h>                             // for pollfd
+#include <stdio.h>      // for fprintf, perror, NULL, stderr, ssize_t, snprintf
+#include <stdlib.h>     // for free, getenv, calloc, realloc
+#include <string.h>     // for strlen, strdup, strncat, strncpy
+#include <sys/socket.h> // for connect, recv, send, socket, AF_UNIX, SOCK_STREAM
+#include <sys/un.h>     // for sockaddr_un
 
 char *get_hyprland_socket(Socket socket_type) {
     // Grab the hyprland_instance_signature for use in the socket path.
