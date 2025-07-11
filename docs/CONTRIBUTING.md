@@ -1,5 +1,9 @@
 # Hyprland Workspace Indicator - Contributing Guide 
 
+## Overview
+
+This is a guiding document for potential contributors so they understand how they should contribute to the project.
+
 ## Developing
 
 To guide developers, there is a [*developer handbook*](DEVELOPER.md).
