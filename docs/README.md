@@ -1,6 +1,6 @@
-# `hyprland-workspace-indicator`
+# Hyprland Workspace Indicator
 
-## What is it?
+## About
 
 ![Animated demonstration](demonstration.gif)
 
