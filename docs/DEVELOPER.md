@@ -6,7 +6,6 @@ This is a developer handbook that will guide developers with:
 
 - Building
 - Architecture
-- Standards & Conventions
 - Designs
 - Testing
 
