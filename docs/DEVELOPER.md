@@ -1,5 +1,15 @@
 # Hyprland Workspace Indicator - Developer Handbook 
 
+## Overview
+
+This is a developer handbook that will guide developers with:
+
+- Building
+- Architecture
+- Standards & Conventions
+- Designs
+- Testing
+
 ## Contributing
 
 To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
