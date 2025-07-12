@@ -30,6 +30,21 @@ To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
 		- Standard Library - [The GNU C Library](https://www.gnu.org/software/libc/)
 		- Other Libraries - [cJSON](https://github.com/DaveGamble/cJSON)
 
+### Recommended Developer Tools/Environment
+
+Some of these (i.e., linters and formatters) are enforced through CI checks.
+
+- Editor
+    - [Neovim](https://neovim.io/)
+- Language Server
+    - [clangd](https://clangd.llvm.org/)
+- Linters
+    - [ClangTidy](https://prettier.io/)
+    - [Include What You Use](https://github.com/include-what-you-use/include-what-you-use)
+- Formatters
+    - [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html)
+    - [Prettier](https://prettier.io/)
+
 ## How to build and install (eww)
 
 Build requirements:
