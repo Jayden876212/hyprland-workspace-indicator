@@ -15,6 +15,10 @@ To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
 
 ## Dependencies
 
+### Runtime Dependencies
+
+- [Hyprland](https://github.com/hyprwm/Hyprland)
+
 ### Basic Development Toolchain
 
 - [C Programming Language](https://www.c-language.org/)
