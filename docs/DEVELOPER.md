@@ -45,15 +45,56 @@ Some of these (i.e., linters and formatters) are enforced through CI checks.
     - [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html)
     - [Prettier](https://prettier.io/)
 
-## How to build and install (eww)
+## How to build and install
 
-Build requirements:
+### Requirements
 
-- cJSON
-- Make
+You need to install the [development toolchain mentioned above](DEVELOPER.md#basic-development-toolchain).
 
-1. Run `make`
-2. Edit the workspaces_script in `bin/` to the path of the binary (which is produced in the `bin/` directory by default).
-3. Set a `deflisten` variable in eww with the workspaces_script as the input.
-4. Create a `defwidget` that uses that variable for `:reveal` or `:visible` as seen by the example code in `example/`.
-5. Implement the widget in a `defwindow`, like your eww bar for example.
+### Step 1 - Clone project and `cd` into it
+
+First, you must get a copy of the project's source from this GitHub repository:
+
+```sh
+git clone https://github.com/Jayden876212/hyprland-workspace-indicator
+cd hyprland-workspace-indicator
+```
+
+### Step 2 - Generate the build files
+
+Then you need to generate the build files in the `build` directory.
+
+```sh
+./configure
+```
+
+### Step 3 - Run `make` from `build` directory
+
+Finally, run `make` from the `build` directory:
+
+```sh
+make -C build install
+```
+
+This should install `hyprland-workspaces` to your `$PATH` so you can run it.
+
+This may need root privileges depending on your environment:
+
+Using `sudo`:
+
+```sh
+sudo make -C build install
+```
+
+Using `doas`:
+
+```sh
+doas make -C build install
+```
+
+Using `su`:
+
+```sh
+su
+make -C build install
+```
