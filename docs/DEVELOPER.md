@@ -39,7 +39,7 @@ Some of these (i.e., linters and formatters) are enforced through CI checks.
 - Language Server
     - [clangd](https://clangd.llvm.org/)
 - Linters
-    - [ClangTidy](https://prettier.io/)
+    - [ClangTidy](https://clang.llvm.org/extra/clang-tidy/)
     - [Include What You Use](https://github.com/include-what-you-use/include-what-you-use)
 - Formatters
     - [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html)
