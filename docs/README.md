@@ -1,6 +1,8 @@
-# `hyprland-workspace-indicator`
+# Hyprland Workspace Indicator
 
-## What is it?
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=plastic)](https://www.gnu.org/licenses/gpl-3.0) ![C](https://img.shields.io/badge/c-%2300599C.svg?style=plastic&logo=c&logoColor=white) ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=plastic&logo=SASS&logoColor=white) ![CMake](https://img.shields.io/badge/CMake-%23008FBA.svg?style=plastic&logo=cmake&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=plastic&logo=githubactions&logoColor=white) [![GitHub issues-open](https://img.shields.io/github/issues/Jayden876212/hyprland-workspace-indicator.svg?style=plastic)](https://GitHub.com/Jayden876212/hyprland-workspace-indicator/issues?q=is%3Aissue+is%3Aopen) [![GitHub open pull-requests](https://img.shields.io/github/issues-pr/Jayden876212/hyprland-workspace-indicator.svg?style=plastic)](https://github.com/Jayden876212/hyprland-workspace-indicator/pull/) [![GitHub latest commit](https://img.shields.io/github/last-commit/Jayden876212/hyprland-workspace-indicator?style=plastic)](https://GitHub.com/Jayden876212/hyprland-workspace-indicator/commit/)
+
+## About
 
 ![Animated demonstration](demonstration.gif)
 
@@ -127,27 +129,14 @@ The widget is then placed in a window:
 )
 ```
 
-## How to build and install (eww)
+## Contributing
 
-Build requirements:
+To contribute, there is a [_contributing guide_](CONTRIBUTING.md).
 
-- cJSON
-- Make
+## Developing
 
-1. Run `make`
-2. Edit the workspaces_script in `bin/` to the path of the binary (which is produced in the `bin/` directory by default).
-3. Set a `deflisten` variable in eww with the workspaces_script as the input.
-4. Create a `defwidget` that uses that variable for `:reveal` or `:visible` as seen by the example code in `example/`.
-5. Implement the widget in a `defwindow`, like your eww bar for example.
+To guide developers, there is a [_developer handbook_](DEVELOPER.md).
 
-## !!! WARNING !!!
+## License
 
-This is alpha-quality software. Proper error handling still needs to be implemented.
-
-If you have trouble with this program, do not hesitate to report it in the issues section.
-
-## Credits
-
-I would like to thank the developers of these wonderful projects:
-
-- https://github.com/DaveGamble/cJSON
+This project is developed under the [GNU GPL v3 License](https://www.gnu.org/licenses/gpl-3.0).

@@ -1,14 +1,14 @@
 @mixin border {
-  border-color: #13161b;
-  border-style: solid;
-  border-width: 2px;
+    border-color: #13161b;
+    border-style: solid;
+    border-width: 2px;
 }
 
 @mixin text {
-  //font-family: "jetbrains mono nerd font";
-  font-family: "urw gothic";
-  font-weight: 900;
-  color: rgba(255, 255, 255, 1);
+    //font-family: "jetbrains mono nerd font";
+    font-family: "urw gothic";
+    font-weight: 900;
+    color: rgba(255, 255, 255, 1);
 }
 
 $border-radius-circle: 50%;
@@ -16,34 +16,34 @@ $inactive-circle-colour: #2e3440;
 $active-circle-colour: #81a1c1;
 
 .inactive-circle-indicator {
-  @include border;
-  border-radius: $border-radius-circle;
-  background-color: rgba($inactive-circle-colour, 0.75);
+    @include border;
+    border-radius: $border-radius-circle;
+    background-color: rgba($inactive-circle-colour, 0.75);
 }
 
 .inactive-circle-indicator-margin {
-  @include border;
-  border-radius: $border-radius-circle;
-  background-color: rgba($inactive-circle-colour, 0.75);
-  margin-right: 10px;
+    @include border;
+    border-radius: $border-radius-circle;
+    background-color: rgba($inactive-circle-colour, 0.75);
+    margin-right: 10px;
 }
 
 .active-circle-indicator {
-  @include border;
-  border-radius: $border-radius-circle;
-  background-color: rgba($active-circle-colour, 1);
+    @include border;
+    border-radius: $border-radius-circle;
+    background-color: rgba($active-circle-colour, 1);
 }
 
 .active-circle-indicator-margin {
-  @include border;
-  border-radius: $border-radius-circle;
-  background-color: rgba($active-circle-colour, 1);
-  margin-right: 10px;
+    @include border;
+    border-radius: $border-radius-circle;
+    background-color: rgba($active-circle-colour, 1);
+    margin-right: 10px;
 }
 
 .container {
-  background-color: rgba(46, 52, 64, 0);
-  border-radius: 10px 10px 10px 10px;
-  @include text;
-  color: rgba(255, 255, 255, 1);
+    background-color: rgba(46, 52, 64, 0);
+    border-radius: 10px 10px 10px 10px;
+    @include text;
+    color: rgba(255, 255, 255, 1);
 }
