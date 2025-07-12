@@ -131,11 +131,11 @@ The widget is then placed in a window:
 
 ## Contributing
 
-To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
+To contribute, there is a [_contributing guide_](CONTRIBUTING.md).
 
 ## Developing
 
-To guide developers, there is a [*developer handbook*](DEVELOPER.md).
+To guide developers, there is a [_developer handbook_](DEVELOPER.md).
 
 ## License
 

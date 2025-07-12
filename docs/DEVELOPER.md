@@ -1,4 +1,4 @@
-# Hyprland Workspace Indicator - Developer Handbook 
+# Hyprland Workspace Indicator - Developer Handbook
 
 ## Overview
 
@@ -11,7 +11,7 @@ This is a developer handbook that will guide developers with:
 
 ## Contributing
 
-To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
+To contribute, there is a [_contributing guide_](CONTRIBUTING.md).
 
 ## Dependencies
 
@@ -23,12 +23,12 @@ To contribute, there is a [*contributing guide*](CONTRIBUTING.md).
 
 - [C Programming Language](https://www.c-language.org/)
 - Basic Toolchain
-	- Compiler - [Clang](https://clang.llvm.org/)
-	- Build System - [CMake](https://cmake.org/)
-	- Debugger - [Valgrind](https://valgrind.org/)
-	- Libraries:
-		- Standard Library - [The GNU C Library](https://www.gnu.org/software/libc/)
-		- Other Libraries - [cJSON](https://github.com/DaveGamble/cJSON)
+    - Compiler - [Clang](https://clang.llvm.org/)
+    - Build System - [CMake](https://cmake.org/)
+    - Debugger - [Valgrind](https://valgrind.org/)
+    - Libraries:
+        - Standard Library - [The GNU C Library](https://www.gnu.org/software/libc/)
+        - Other Libraries - [cJSON](https://github.com/DaveGamble/cJSON)
 
 ### Recommended Developer Tools/Environment
 

@@ -1,8 +1,7 @@
 ---
 name: ENHANCEMENT
-about:
-  Further development of some existing feature/requirement to bring more value
-  to the end user.
+about: Further development of some existing feature/requirement to bring more value
+    to the end user.
 title: "ENHANCEMENT: "
 labels: enhancement
 assignees: ""

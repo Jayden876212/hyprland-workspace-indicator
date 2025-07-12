@@ -1,8 +1,7 @@
 ---
 name: DEFECT
-about:
-  Unintended behaviour of the software product that affects the ability to meet
-  requirements.
+about: Unintended behaviour of the software product that affects the ability to meet
+    requirements.
 title: "DEFECT: "
 labels: defect
 assignees: ""
