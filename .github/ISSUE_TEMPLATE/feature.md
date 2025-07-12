@@ -1,8 +1,7 @@
 ---
 name: FEATURE
-about:
-  Brand new requirement/feature adding valuable functionality that was not there
-  before.
+about: Brand new requirement/feature adding valuable functionality that was not there
+    before.
 title: "FEATURE: "
 labels: feature
 assignees: ""

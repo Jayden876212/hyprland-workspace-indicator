@@ -5,3 +5,6 @@
 # Ignore C source and header files because these are already checked with better tools
 *.c
 *.h
+
+# Ignore auto-generated NPM lock file
+package-lock.json

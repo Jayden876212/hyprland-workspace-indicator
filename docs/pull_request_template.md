@@ -12,6 +12,6 @@
 - Issues solved by proposed changes: #{ISSUE_NUMBER}
 - The proposed changes solve these issues by...
 - Other specific changes include:
-  1.
-  2.
-  3.
+    1.
+    2.
+    3.
