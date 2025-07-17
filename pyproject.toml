@@ -17,3 +17,4 @@ tag_format = "$version"
 version_scheme = "pep440"
 version_provider = "uv"
 major_version_zero = true
+always_signoff = true
