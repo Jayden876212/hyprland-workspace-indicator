@@ -5,3 +5,8 @@ description = "A multi-monitor workspace indicator JSON output for use with EWW 
 readme = "docs/README.md"
 requires-python = ">=3.13"
 dependencies = []
+
+[dependency-groups]
+dev = [
+    "commitizen>=4.8.3",
+]
