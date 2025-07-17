@@ -1,0 +1,7 @@
+[project]
+name = "hyprland-workspace-indicator"
+version = "0.9.1"
+description = "A multi-monitor workspace indicator JSON output for use with EWW and Hyprland."
+readme = "docs/README.md"
+requires-python = ">=3.13"
+dependencies = []
