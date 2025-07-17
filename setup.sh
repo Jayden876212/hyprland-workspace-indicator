@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Install UV locally if it isn't installed already
+# Install astral uv locally if it isn't installed already
 if ! command -v uv >/dev/null 2>&1; then
     echo "uv is not installed. (see https://docs.astral.sh/uv/)"
     read -p "Do you want to install it? (y/n) " answer
