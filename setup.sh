@@ -22,3 +22,9 @@ else
     echo "uv is installed."
 fi
 
+# Download and copy commitizen hooks to .git
+wget -O .git/hooks/prepare-commit-msg https://raw.githubusercontent.com/commitizen-tools/commitizen/master/hooks/prepare-commit-msg.py
+chmod +x .git/hooks/prepare-commit-msg
+wget -O .git/hooks/post-commit https://raw.githubusercontent.com/commitizen-tools/commitizen/master/hooks/post-commit.py
+chmod +x .git/hooks/post-commit
+
